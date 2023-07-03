@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Strongbow</title>
+    <link rel="stylesheet" href="juic.css">
+  </head>
+  <body>
+
+    <table>
+      <tr>
+      <td> <a href="first_rest.html">🏡 <br/>Home</a> </td>
+    <td></td>
+    <td></td>
+      <td></td>
+      <td> <a href="#"> ✉<br/>Massages</a> </td>
+      <td> <a onclick="cart()" id="cart" href="#">🛒 <br/>carts</a> </td>
+      <td></td>
+      <td></td>
+      <td> <a href="account.html"> 🙍🏿‍♂️ <br/>account</a> </td>
+
+        </tr>
+    </table>
+
+    <h1><img class="juice" src="OGC (9).gif" alt=""></h1><hr/>
+    <figcaption><b>Now R14.00</b> <s>was R19.19</s></figcaption>
+
+      <p class="kind"><b>Strong bow 250ml</b</p>
+        <p class="infor"><b> <input type="button" name="" value="18+"> Age restricted for the person under the age of 18</b></p>
+      <p class="Lemon">⏱<b>Free Delivery from 08:00 to 16:30</b></p>
+      <h2>About our product</h2>
+      <p class="about" >Strongbow is made up of freshly picked up apples and it also has the original apple taste</p><hr/>
+
+     <p> <input id="stongbow" class="items" type="number" name="items" value="0" min="1" max="10"> <input class="cart" type="submit" name="" value="Add to cart" onclick="price()"> </p><hr/>
+     <p><b>TOTAL INCLUDING VAT</b></p>
+     <p> <input id="calc" class="tot" type="text" name="" placeholder="R"> <input class="subm" type="submit" name="" value="PLACE ORDER" onclick="functionName()" ></p><br/>
+
+
+
+     <script type="text/javascript">
+
+     function price() {
+       var first=document.getElementById("stongbow");
+       var final=document.getElementById("calc");
+
+       var stongbow=first.value;
+       var tot=final.value;
+
+       var tot=stongbow*+14.00;
+       final.value="R "+tot;
+     }
+
+     function functionName() {
+       var first=document.getElementById("stongbow");
+       var final=document.getElementById("calc");
+
+       var stongbow=first.value;
+       var tot=final.value;
+
+       var tot=stongbow*+14.00;
+       final.value="R "+tot;
+
+       var trolley=document.getElementById("cart");
+
+       var cart=trolley.value;
+
+     if (tot==0) {
+       window.alert("We can't proceed without an order that is placed")
+     }
+     else {
+       document.write("<p>We are now preparing your order,We will notify you when the order is ready</p>");
+       document.write("Your total amount for "+juice+" item(s) is R "+tot);
+
+     }
+     }
+
+     function cart() {
+       var first=document.getElementById("stongbow");
+       var final=document.getElementById("calc");
+
+       var stongbow=first.value;
+       var tot=final.value;
+
+       var tota=stongbow*+14.00*15/100;
+       final.value="R "+tota;
+
+       var tot=stongbow*+14.00*115/100;
+       final.value="R "+tot;
+
+       var total=stongbow*+14.00;
+       final.value="R "+total;
+
+
+       var trolley=document.getElementById("cart");
+
+       var cart=trolley.value;
+
+       if (tot==0) {
+         document.write("<h1>"+"The cart is empty")
+       }
+       else {
+         document.write("<h1>"+"Smirth Exclusive Chilla's</h1>")
+         document.write("<p>"+"Order Type: takeaway</p>")
+         document.write("<p>"+"Number of items ordered: "+stongbow+"</p>")
+         document.write("<p>Service fees: "+"R"+tota+"</p>");
+         document.write("<p>Amount before Fees: "+"R"+total+"</p>")
+         document.write("<p>Total amount: "+"R"+tot+"</p>");
+         document.write("<p>"+"Thank you for your support!!!!!</p>")
+
+
+
+       }
+     }
+
+     </script>
+
+  </body>
+</html>

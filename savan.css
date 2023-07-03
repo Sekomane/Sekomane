@@ -1,0 +1,102 @@
+.savana{
+  width:30%;
+  height: 30%;
+  margin-left: 30%;
+}
+figcaption{
+  font-size: 20px;
+  margin-left: 30%;
+
+}
+p{
+  margin-left: 30%;
+}
+input{
+  border-radius: 20px;
+}
+.infor{
+  border: 1px solid grey;
+  border-radius: 10px;
+  padding: 4px;
+  min-width: 0px;
+  max-width: 450px;
+}
+.kind{
+  font-size: 30px;
+  padding: 0px;
+}
+h2{
+  margin-left: 30%;
+}
+.about{
+  font-size: 20px;
+  font-weight: bold;
+}
+.items{
+  padding: 4px;
+  border-radius: 5px;
+  font-size: 20px;
+}
+.cart{
+  padding: 4px;
+  border-radius: 5px;
+  font-size: 20px;
+  color:white;
+  background-color:#00008B;
+
+}
+
+.infor{
+    border: 1px solid grey;
+    border-radius: 10px;
+    padding: 4px;
+    min-width: 0px;
+    max-width: 450px;
+}
+.tot{
+  border: 2px solid grey;
+  border-radius: 10px;
+  padding: 4px;
+  min-width: 0px;
+  max-width: 450px;
+  font-size: 20px;
+}
+.subm{
+  border: 2px solid grey;
+  border-radius: 10px;
+  padding: 4px;
+  min-width: 0px;
+  max-width: 450px;
+  font-size: 20px;
+  background-color:#00008B;
+  color: white;
+
+}
+a{
+  text-decoration: none;
+  color: white;
+  font-size: 20px;
+}
+
+table{
+  max-width: 150px;
+  min-height: 10px;
+  margin-top: 0px;
+  padding-top: 0px;
+  padding: 0px;
+  background-color:grey;
+  color: white;
+  border-radius: 5px;
+  border-collapse: separate;
+  border-spacing: 35px;
+  min-width: 100%;
+
+}
+td{
+}
+tr{
+
+}
+th{
+border: 4px black;
+}

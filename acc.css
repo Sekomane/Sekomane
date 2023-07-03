@@ -1,0 +1,45 @@
+fieldset{
+  border: 2px grey solid;
+}
+
+td{
+  font-size: 30px;
+}
+table{
+  border-spacing: 20px;
+}
+input{
+  width: 330px;
+  height:50px;
+  font-size: 20px;
+}
+#pay{
+  padding-left: 200px;
+}
+#sub{
+  background-color: blue;
+}
+a{
+  text-decoration: none;
+  color: red;
+  font-weight: bold;
+  font-size: 20px;
+}
+#acc{
+  color: red;
+  font-weight: bold;
+  font-size: 20px;
+}
+.note{
+  color: red;
+  font-size: 15px;
+}
+.bank{
+  width: 300px;
+  height: 170px;
+}
+.profile{
+  margin-left: 490px;
+  width: 350px;
+  height: 280px;
+}
