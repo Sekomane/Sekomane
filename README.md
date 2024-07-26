@@ -1,6 +1,6 @@
 <h1 align="center">Hi 👋, I'm Rorisang</h1>
 
-<h3 align="center">A passionate developer from Tswane University of Technology</h3>
+<h3 align="center">A passionate developer from Tshwane University of Technology 🇿🇦</h3>
 <p align="left"> <img src="https://komarev.com/ghpvc/?username=Sekomane" alt="Sekomane" /> </p>
 
 <p align="left">
@@ -8,7 +8,7 @@
   <a href="https://www.instagram.com/ro.ri4311/#" target="blank"><img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/instagram.svg" alt="ro.ri4311" height="30" width="40" /></a>
   <a href="https://www.facebook.com/yeayea.rorisang?mibextid=ZbWKwL" target="blank"><img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/facebook.svg" alt="yeayea.rorisang" height="30" width="40" /></a>
   <a href="https://www.linkedin.com/in/rorisang-sekomane-413420268?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="blank"><img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/linkedin.svg" alt="rorisang-sekomane-413420268" height="30" width="40" /></a>
-  <a href="https://wa.me/0639457648" target="blank"><img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/whatsapp.svg" alt="0639457648" height="30" width="40" /></a>
+  <a href="https://wa.me/27639457648" target="blank"><img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/whatsapp.svg" alt="0639457648" height="30" width="40" /></a>
 </p>
 
 - 💬 Ask me about **Java, JavaScript, PHP, SQL, Bootstrap, HTML, CSS**
@@ -22,7 +22,7 @@
   <a href="https://www.instagram.com/ro.ri4311/#" target="blank"><img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/instagram.svg" alt="ro.ri4311" height="30" width="40" /></a>
   <a href="https://www.facebook.com/yeayea.rorisang?mibextid=ZbWKwL" target="blank"><img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/facebook.svg" alt="yeayea.rorisang" height="30" width="40" /></a>
   <a href="https://www.linkedin.com/in/rorisang-sekomane-413420268?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="blank"><img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/linkedin.svg" alt="rorisang-sekomane-413420268" height="30" width="40" /></a>
-<a href="https://wa.me/27639457648" target="blank"><img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/whatsapp.svg" alt="0639457648" height="30" width="40" /></a>
+  <a href="https://wa.me/27639457648" target="blank"><img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/whatsapp.svg" alt="0639457648" height="30" width="40" /></a>
 </p>
 
 <h3 align="left">Languages and Tools:</h3>
