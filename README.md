@@ -14,7 +14,7 @@
 
 ---
 
-- 💻 I’m currently working on **Java, PHP, React, Kotlin, MySQL, and Android projects**
+- 💻 I’m currently working on **Java, React, MySQL, and Android projects**
 - 🧠 Always learning **React**, **Kotlin**, **Linux**, and **API integration**
 - 💬 Ask me about: **Java, JavaFX, Swing, PHP, SQL, JDBC, CRUD, JS, HTML/CSS, Bootstrap**
 - 📫 How to reach me: **sekomanerorisang904@gmail.com**
