@@ -14,12 +14,12 @@
 
 ---
 
-- 💻 I’m currently working on **Java, React, MySQL, and Android projects**
-- 🧠 Always learning **React**, **Kotlin**, **Linux**, and **API integration**
-- 💬 Ask me about: **Java, JavaFX, Swing, PHP, SQL, JDBC, CRUD, JS, HTML/CSS, Bootstrap**
+- 💻 I’m currently working on **Java EE (JSP, Servlets, JPA, EJB), React, MySQL, and Web Application projects**
+- 🧠 Always learning **C#, .NET, Kotlin, Linux, and API integration**
+- 💬 Ask me about: **Java, JSP/Servlets, JPA, JDBC, React, MySQL, HTML/CSS, Bootstrap, and Database-driven Web Apps**
 - 📫 How to reach me: **sekomanerorisang904@gmail.com**
 - 🧰 Check out my work on: [GitHub Portfolio](https://github.com/Sekomane)
-- ⚡ Fun fact: **I build both backend logic and beautiful user interfaces!**
+- ⚡ Fun fact: **I build secure backend systems and responsive, modern user interfaces!**
 
 ---
 
