@@ -1,6 +1,6 @@
 <h1 align="center">Hi 👋, I'm Rorisang</h1>
 
-<h3 align="center">A passionate developer from Tshwane University of Technology 🇿🇦</h3>
+<h3 align="center">A passionate Full-Stack Developer from Tshwane University of Technology 🇿🇦</h3>
 
 <p align="center">
   <img src="https://komarev.com/ghpvc/?username=Sekomane" alt="Sekomane" />
@@ -14,12 +14,12 @@
 
 ---
 
-- 💻 I’m currently working on **Java EE (JSP, Servlets, JPA, EJB), React, MySQL, and Web Application projects**
-- 🧠 Always learning **C#, .NET, Kotlin, Linux, and API integration**
-- 💬 Ask me about: **Java, JSP/Servlets, JPA, JDBC, React, MySQL, HTML/CSS, Bootstrap, and Database-driven Web Apps**
-- 📫 How to reach me: **sekomanerorisang904@gmail.com**
-- 🧰 Check out my work on: [GitHub Portfolio](https://github.com/Sekomane)
-- ⚡ Fun fact: **I build secure backend systems and responsive, modern user interfaces!**
+- 💻 I’m currently working on **Java EE (JSP, Servlets, JPA, EJB), React, MySQL, and Database-driven Web Applications**
+- 🧠 Always learning **C#, .NET, Kotlin, Linux, and Advanced API Integration**
+- 💬 Ask me about: **Java EE, React, MySQL, JSP/Servlets, JPA, JDBC, HTML/CSS, Bootstrap, and Secure Web App Development**
+- 📫 Reach me at: **sekomanerorisang904@gmail.com**
+- 🧰 Check out my work: [GitHub Portfolio](https://github.com/Sekomane)
+- ⚡ Fun fact: **I love building secure backend logic and modern, responsive UIs that solve real problems!**
 
 ---
 
@@ -29,7 +29,7 @@
   <a href="https://twitter.com/Rorisang06394" target="blank">
     <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/twitter.svg" alt="Twitter" height="30" width="40" />
   </a>
-  <a href="https://www.instagram.com/ro.ri4311/#" target="blank">
+  <a href="https://www.instagram.com/ro.ri4311/" target="blank">
     <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/instagram.svg" alt="Instagram" height="30" width="40" />
   </a>
   <a href="https://www.facebook.com/yeayea.rorisang" target="blank">
@@ -52,29 +52,32 @@
   <a href="#"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg" alt="CSS3" width="40" height="40"/></a>
   <a href="#"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="JavaScript" width="40" height="40"/></a>
   <a href="#"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg" alt="React" width="40" height="40"/></a>
-  <a href="#"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/php/php-original.svg" alt="PHP" width="40" height="40"/></a>
+  <a href="#"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="Java" width="40" height="40"/></a>
   <a href="#"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original.svg" alt="MySQL" width="40" height="40"/></a>
   <a href="#"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap" width="40" height="40"/></a>
-  <a href="#"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="Java" width="40" height="40"/></a>
+  <a href="#"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/php/php-original.svg" alt="PHP" width="40" height="40"/></a>
   <a href="#"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/kotlin/kotlin-original.svg" alt="Kotlin" width="40" height="40"/></a>
   <a href="#"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" alt="Linux" width="40" height="40"/></a>
+  <a href="#"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg" alt="C#" width="40" height="40"/></a>
+  <a href="#"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/dot-net/dot-net-original.svg" alt=".NET" width="40" height="40"/></a>
 </p>
 
 ---
 
 <h3 align="left">📚 Skills</h3>
 
-- Java, Swing/JavaFX, OOP
-- PHP & MySQL, JDBC, CRUD
-- Kotlin & Android Studio
-- HTML5, CSS3, JavaScript, Bootstrap 5
-- Linux & Windows development environments
-- Password hashing, form validation, payment gateway integration
-- Responsive UI/UX design
-- Cart functionality & checkout flow
-- REST API integration (e.g., OpenWeather API)
-- Attention to detail & problem-solving
-- Strong communication, teamwork & time management
+- **Backend Development**: Java EE (JSP, Servlets, JPA, EJB), PHP & MySQL, JDBC, CRUD  
+- **Frontend Development**: React, HTML5, CSS3, JavaScript, Bootstrap 5  
+- **Mobile Development**: Kotlin & Android Studio  
+- **System & Tools**: Linux, Windows, Git/GitHub  
+- **Core Expertise**:  
+  - Secure authentication (password hashing, form validation)  
+  - Payment gateway integration  
+  - REST API integration (e.g., OpenWeather API)  
+  - Responsive UI/UX design  
+  - Cart functionality & checkout flows  
+  - Attention to detail & debugging  
+  - Strong communication, teamwork & time management  
 
 ---
 
