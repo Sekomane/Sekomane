@@ -1,7 +1,7 @@
 <h1 align="center">Rorisang Sekomane</h1>
 
 <h3 align="center">
-Full-Stack Software Engineer | Java • C# • .NET • React • Kotlin • SQL
+Full-Stack Software Engineer
 </h3>
 
 <p align="center">
