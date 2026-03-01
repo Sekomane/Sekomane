@@ -105,7 +105,6 @@ Strong focus on clean architecture, REST API integration, authentication securit
 - Time Management & Structured Development Approach
 
 ---
----
 
 ## Featured Projects
 
