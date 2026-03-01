@@ -18,7 +18,7 @@ Full-Stack Software Engineer | Java • C# • .NET • React • Kotlin • SQL
 
 ## 🚀 Professional Summary
 
-Full-Stack Software Engineer specializing in backend system design and modern web & mobile application development.  
+Full-Stack Software Engineer specializing in both backend system architecture and modern frontend development.
 
 Experienced in Java EE (JSP, Servlets, JPA, EJB), C#/.NET, PHP, and MySQL for building secure, database-driven systems. Skilled in frontend development using React, JavaScript, HTML5, CSS3, and Bootstrap.  
 
