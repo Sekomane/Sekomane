@@ -16,7 +16,7 @@ Full-Stack Software Engineer | Java • C# • .NET • React • Kotlin • SQL
 
 ---
 
-## 🚀 Professional Summary
+## Professional Summary
 
 Full-Stack Software Engineer specializing in both backend system architecture and modern frontend development.
 
@@ -26,7 +26,7 @@ Strong focus on clean architecture, REST API integration, authentication securit
 
 ---
 
-## 🧑‍💻 Connect With Me
+## Connect With Me
 
 <p align="left">
   <a href="https://twitter.com/Rorisang06394" target="blank">
@@ -68,7 +68,7 @@ Strong focus on clean architecture, REST API integration, authentication securit
 
 ---
 
-## 📚 Skills & Expertise
+## Skills & Expertise
 
 ### Backend Development
 - Java EE (JSP, Servlets, JPA, EJB)
@@ -103,3 +103,10 @@ Strong focus on clean architecture, REST API integration, authentication securit
 - Attention to Detail
 - Strong Communication & Team Collaboration
 - Time Management & Structured Development Approach
+
+---
+---
+
+## Featured Projects
+
+Explore my repositories to see full-stack web systems, backend architecture implementations, and Android applications built with clean structure and scalable design principles.
