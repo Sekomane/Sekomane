@@ -109,5 +109,5 @@ Strong focus on clean architecture, REST API integration, authentication securit
 ## 📊 GitHub Statistics
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=Sekomane&show_icons=true&count_private=true&hide_title=true&theme=default&cache_seconds=1800" />
+  <img src="https://github-readme-stats-git-masterrstaa-rickstaa.vercel.app/api?username=Sekomane&show_icons=true&count_private=true" />
 </p>
