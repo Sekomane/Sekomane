@@ -133,4 +133,4 @@ Java EE (JSP, Servlets, JPA, EJB) • AWS S3 • GitHub Actions • CI/CD • Sw
 
 ---
 
-> “First, solve the problem. Then, write the code.” — John Johnson
+> "Engineering is not just writing code — it's designing systems people can depend on."
