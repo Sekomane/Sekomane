@@ -1,48 +1,40 @@
-<h1 align="center">Rorisang Sekomane</h1>
+<h1 align="center">Hi, I'm Rorisang Sekomane</h1>
 
-<h3 align="center">
-Full-Stack Software Engineer
-</h3>
+<h3 align="center">Full-Stack Software Engineer | Backend & Frontend Developer</h3>
 
 <p align="center">
-  <img src="https://komarev.com/ghpvc/?username=Sekomane" alt="Profile Views" />
-</p>
-
-<p align="center">
-  <a href="https://twitter.com/Rorisang06394" target="blank">
-    <img src="https://img.shields.io/twitter/follow/Rorisang06394?logo=twitter&style=for-the-badge" alt="Twitter Follow" />
-  </a>
+  <img src="https://komarev.com/ghpvc/?username=Sekomane&label=Profile%20Views&color=0e75b6&style=flat" alt="Profile Views" />
 </p>
 
 ---
 
-## Professional Summary
+## 👨‍💻 Professional Summary
 
-Full-Stack Software Engineer specializing in both backend system architecture and modern frontend development.
+I am a Full-Stack Software Engineer with experience in building secure, database-driven, and scalable web applications.
 
-Experienced in Java EE (JSP, Servlets, JPA, EJB), C#/.NET, PHP, and MySQL for building secure, database-driven systems. Skilled in frontend development using React, JavaScript, HTML5, CSS3, and Bootstrap.  
+I specialize in backend development using Java EE, C#/.NET, PHP, and MySQL, as well as frontend development using React, JavaScript, HTML5, CSS3, and Bootstrap.
 
-Strong focus on clean architecture, REST API integration, authentication security, performance optimization, and scalable application design.
+I have a strong interest in clean architecture, REST API integration, authentication security, performance optimization, and building user-friendly digital solutions.
 
 ---
 
-## Connect With Me
+## 🔗 Connect With Me
 
 <p align="left">
-  <a href="https://twitter.com/Rorisang06394" target="blank">
-    <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/twitter.svg" height="30" width="40" />
+  <a href="https://twitter.com/Rorisang06394" target="_blank">
+    <img src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/twitter.svg" height="30" width="40" />
   </a>
-  <a href="https://www.instagram.com/ro.ri4311/" target="blank">
-    <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/instagram.svg" height="30" width="40" />
+  <a href="https://www.instagram.com/ro.ri4311/" target="_blank">
+    <img src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/instagram.svg" height="30" width="40" />
   </a>
-  <a href="https://www.facebook.com/yeayea.rorisang" target="blank">
-    <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/facebook.svg" height="30" width="40" />
+  <a href="https://www.facebook.com/yeayea.rorisang" target="_blank">
+    <img src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/facebook.svg" height="30" width="40" />
   </a>
-  <a href="https://www.linkedin.com/in/rorisang-sekomane-413420268/" target="blank">
-    <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/linkedin.svg" height="30" width="40" />
+  <a href="https://www.linkedin.com/in/rorisang-sekomane-413420268/" target="_blank">
+    <img src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/linkedin.svg" height="30" width="40" />
   </a>
   <a href="mailto:sekomanerorisang904@gmail.com">
-    <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/gmail.svg" height="30" width="40" />
+    <img src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/gmail.svg" height="30" width="40" />
   </a>
 </p>
 
@@ -56,56 +48,64 @@ Strong focus on clean architecture, REST API integration, authentication securit
   <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" width="40" height="40"/>
   <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg" width="40" height="40"/>
   <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original.svg" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/bootstrap/bootstrap-original.svg" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/php/php-original.svg" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/kotlin/kotlin-original.svg" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" width="40" height="40"/>
   <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg" width="40" height="40"/>
   <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/dot-net/dot-net-original.svg" width="40" height="40"/>
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/php/php-original.svg" width="40" height="40"/>
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original.svg" width="40" height="40"/>
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/bootstrap/bootstrap-original.svg" width="40" height="40"/>
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/kotlin/kotlin-original.svg" width="40" height="40"/>
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" width="40" height="40"/>
   <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg" width="40" height="40"/>
 </p>
 
 ---
 
-## Skills & Expertise
+## 💡 Skills & Expertise
 
 ### Backend Development
-- Java EE (JSP, Servlets, JPA, EJB)
+- Java EE: JSP, Servlets, JPA, EJB
 - C# / .NET
 - PHP
-- JDBC & CRUD System Design
-- MySQL & Database Modeling
-- Secure Authentication (Password Hashing, Validation)
+- JDBC and CRUD System Design
+- MySQL and Database Modeling
+- Secure Authentication and Validation
+- REST API Development and Integration
 - Payment Gateway Integration
-- REST API Development & Integration (e.g., OpenWeather API)
 
 ### Frontend Development
 - React
-- JavaScript (ES6+)
-- HTML5 / CSS3
+- JavaScript ES6+
+- HTML5 and CSS3
 - Bootstrap 5
 - Responsive UI/UX Design
-- Cart & Checkout Flow Implementation
+- Cart and Checkout Flow Implementation
 
 ### Mobile Development
 - Kotlin
 - Android Studio
 
-### Systems & Tools
-- Linux & Windows
-- Git & GitHub
+### Systems and Tools
+- Git and GitHub
 - Docker
-- Debugging & Performance Optimization
-
-### Professional Strengths
-- Clean Architecture & OOP Principles
-- Attention to Detail
-- Strong Communication & Team Collaboration
-- Time Management & Structured Development Approach
+- Linux and Windows
+- Debugging and Performance Optimization
 
 ---
 
-## Featured Projects
+## 🚀 Featured Projects
 
-Explore my repositories to see full-stack web systems, backend architecture implementations, and Android applications built with clean structure and scalable design principles.
+My repositories include full-stack web applications, Java EE systems, backend architecture projects, responsive websites, and Android applications.
+
+Each project focuses on clean code, structured development, database integration, authentication, and user-friendly design.
+
+---
+
+## 📌 Professional Strengths
+
+- Clean Architecture and OOP Principles
+- Problem Solving
+- Attention to Detail
+- Strong Communication
+- Team Collaboration
+- Time Management
+- Continuous Learning
