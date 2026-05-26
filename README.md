@@ -4,10 +4,6 @@
 Software Engineer • Full-Stack Development • Backend Systems • Cloud Technologies
 </p>
 
-<p align="center">
-  <img src="https://komarev.com/ghpvc/?username=Sekomane&label=Profile+Views&color=0e75b6&style=flat" alt="Profile Views" />
-</p>
-
 ---
 
 ## About
