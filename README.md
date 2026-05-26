@@ -14,7 +14,7 @@ Software Engineer • Full-Stack Development • Backend Systems • Cloud Techn
 
 Software Engineer with experience developing full-stack applications, backend systems, cloud-enabled solutions, and database-driven platforms across professional, freelance, and academic environments.
 
-Experienced in designing and implementing scalable software solutions using Java, C#, Python, PHP, JavaScript, TypeScript, React, Angular, .NET, Django, SQL, Docker, and AWS technologies.
+Experienced in designing and implementing scalable software solutions using Java, C#, Python, PHP, JavaScript, TypeScript, React, Angular, .NET, Django, SQL, Docker, AWS, and modern web technologies.
 
 Passionate about software architecture, clean code, cloud engineering, backend development, and building reliable systems that solve real-world business problems. Focused on maintainability, scalability, security, performance, and continuous improvement.
 
@@ -24,15 +24,15 @@ Passionate about software architecture, clean code, cloud engineering, backend d
 
 <p align="left">
   <a href="mailto:sekomanerorisang904@gmail.com">
-    <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/gmail.svg" height="28" width="28" />
+    <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/gmail.svg" height="28" width="28" />
   </a>
 
   <a href="https://www.linkedin.com/in/rorisang-sekomane-413420268/" target="_blank">
-    <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/linkedin.svg" height="28" width="28" />
+    <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/linkedin.svg" height="28" width="28" />
   </a>
 
   <a href="https://github.com/Sekomane" target="_blank">
-    <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/github.svg" height="28" width="28" />
+    <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/github.svg" height="28" width="28" />
   </a>
 </p>
 
@@ -40,58 +40,13 @@ Passionate about software architecture, clean code, cloud engineering, backend d
 
 ## Technologies
 
-### Languages
-
 <p align="left">
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/php/php-original.svg" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/kotlin/kotlin-original.svg" width="40" height="40"/>
+  <img src="https://skillicons.dev/icons?i=java,cs,python,php,js,ts,kotlin,react,angular,html,css,bootstrap,tailwind,dotnet,nodejs,express,django,mysql,postgres,firebase,docker,aws,linux,git,github,vscode,idea,androidstudio" />
 </p>
 
-### Frontend Development
+### Additional Technologies & Tools
 
-<p align="left">
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/angularjs/angularjs-original.svg" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/bootstrap/bootstrap-original.svg" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/tailwindcss/tailwindcss-original.svg" width="40" height="40"/>
-</p>
-
-### Backend Development
-
-<p align="left">
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/dot-net/dot-net-original.svg" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/django/django-plain.svg" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original.svg" width="40" height="40"/>
-</p>
-
-Java EE (JSP, Servlets, JPA, EJB)
-
-### Databases
-
-<p align="left">
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original.svg" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original.svg" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/firebase/firebase-plain.svg" width="40" height="40"/>
-</p>
-
-### Cloud & DevOps
-
-<p align="left">
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg" width="40" height="40"/>
-</p>
-
-AWS S3 • GitHub Actions • CI/CD • Jaeger • Containerization
+Java EE (JSP, Servlets, JPA, EJB) • AWS S3 • GitHub Actions • CI/CD • Swagger/OpenAPI • Postman • Jaeger • REST APIs • Containerization • Authentication & Authorization
 
 ---
 
@@ -110,24 +65,20 @@ AWS S3 • GitHub Actions • CI/CD • Jaeger • Containerization
 
 ### Backend Engineering
 
-- Java EE
-- ASP.NET / .NET
-- Django
-- REST API Development
+- Enterprise Application Development
+- REST API Design & Integration
 - Authentication & Authorization
 - Business Logic Implementation
-- Database Integration
 - Secure Application Development
+- Database Integration
 
 ### Frontend Engineering
 
-- React
-- Angular
-- TypeScript
-- JavaScript
+- Component-Based Architecture
 - Responsive User Interface Development
 - State Management
-- Component-Based Architecture
+- Cross-Browser Compatibility
+- Performance Optimization
 
 ### Database Engineering
 
@@ -139,12 +90,12 @@ AWS S3 • GitHub Actions • CI/CD • Jaeger • Containerization
 
 ### Cloud & Infrastructure
 
-- Docker
-- AWS S3
+- Cloud Storage Solutions
+- Containerization
+- CI/CD Pipelines
 - Linux Administration
-- GitHub Actions
-- CI/CD Fundamentals
 - Monitoring & Observability
+- Deployment Automation
 
 ### Professional Strengths
 
@@ -182,4 +133,4 @@ AWS S3 • GitHub Actions • CI/CD • Jaeger • Containerization
 
 ---
 
-> “Any fool can write code that a computer can understand. Good engineers write code that humans can understand.” — Martin Fowler
+> “First, solve the problem. Then, write the code.” — John Johnson
