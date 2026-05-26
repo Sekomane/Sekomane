@@ -1,6 +1,3 @@
-## ~/about
-
-```console
 $ whoami
 Rorisang Sekomane
 
@@ -32,4 +29,3 @@ Artificial Intelligence
 $ philosophy
 Engineering is not just writing code —
 it's designing systems people can depend on.
-```
