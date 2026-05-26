@@ -8,11 +8,11 @@ Software Engineer • Full-Stack Development • Backend Systems • Cloud Techn
 
 ## About
 
-Software Engineer with experience developing full-stack applications, backend systems, cloud-enabled solutions, and database-driven platforms across professional, freelance, and academic environments.
+Software Engineer with experience designing and developing full-stack applications, backend services, cloud-enabled solutions, and database-driven systems across professional, freelance, and academic environments.
 
-Experienced in designing and implementing scalable software solutions using Java, C#, Python, PHP, JavaScript, TypeScript, React, Angular, .NET, Django, SQL, Docker, AWS, and modern web technologies.
+Skilled in Java, C#, Python, PHP, JavaScript, TypeScript, React, Angular, .NET, Django, SQL, Docker, AWS, and modern software engineering practices.
 
-Passionate about software architecture, clean code, cloud engineering, backend development, and building reliable systems that solve real-world business problems. Focused on maintainability, scalability, security, performance, and continuous improvement.
+Focused on building scalable, maintainable, and secure solutions while applying sound architectural principles, performance optimization techniques, and clean code practices to deliver reliable business outcomes.
 
 ---
 
@@ -38,95 +38,95 @@ Passionate about software architecture, clean code, cloud engineering, backend d
 
 <p align="left">
   <img src="https://skillicons.dev/icons?i=java,cs,python,php,js,ts,kotlin,react,angular,html,css,bootstrap,tailwind,dotnet,nodejs,express,django,mysql,postgres,firebase,docker,aws,linux,git,github,vscode,idea,androidstudio" />
+  <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/postman.svg" width="48" height="48" alt="Postman"/>
+  <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/swagger.svg" width="48" height="48" alt="Swagger"/>
 </p>
 
 ### Additional Technologies & Tools
 
-Java EE (JSP, Servlets, JPA, EJB) • AWS S3 • GitHub Actions • CI/CD • Swagger/OpenAPI • Postman • Jaeger • REST APIs • Containerization • Authentication & Authorization
+Java EE (JSP, Servlets, JPA, EJB) • AWS S3 • GitHub Actions • CI/CD • Jaeger • REST APIs • Containerization • Authentication & Authorization
 
 ---
 
-## Expertise
+## Engineer.java
 
-### Software Engineering
+```java
+import java.util.List;
 
-- Object-Oriented Programming (OOP)
-- Software Architecture
-- System Design
-- Design Patterns
-- Clean Architecture
-- Software Development Lifecycle
-- Requirements Analysis
-- Technical Documentation
+public class RorisangSekomane {
 
-### Backend Engineering
+    private final String role =
+        "Software Engineer";
 
-- Enterprise Application Development
-- REST API Design & Integration
-- Authentication & Authorization
-- Business Logic Implementation
-- Secure Application Development
-- Database Integration
+    private final String mission =
+        "Build reliable software that solves real-world problems.";
 
-### Frontend Engineering
+    private final List<String> focusAreas = List.of(
+        "Software Architecture",
+        "Backend Engineering",
+        "Cloud Technologies",
+        "System Design",
+        "Enterprise Applications"
+    );
 
-- Component-Based Architecture
-- Responsive User Interface Development
-- State Management
-- Cross-Browser Compatibility
-- Performance Optimization
+    private final List<String> engineeringPrinciples = List.of(
+        "Maintainability",
+        "Scalability",
+        "Reliability",
+        "Security",
+        "Performance"
+    );
 
-### Database Engineering
+    public void buildSolution() {
 
-- Relational Database Design
-- Database Modeling
-- Query Optimization
-- SQL Development
-- Data Persistence
+        analyseRequirements();
 
-### Cloud & Infrastructure
+        designArchitecture();
 
-- Cloud Storage Solutions
-- Containerization
-- CI/CD Pipelines
-- Linux Administration
-- Monitoring & Observability
-- Deployment Automation
+        developFeatures();
 
-### Professional Strengths
+        writeTests();
 
-- Problem Solving
-- Analytical Thinking
-- Team Collaboration
-- Stakeholder Communication
-- Adaptability
-- Continuous Learning
+        automateWorkflows();
 
----
+        deploySecurely();
 
-## Areas of Interest
+        monitorPerformance();
 
-- Software Architecture
-- Cloud Engineering
-- Backend Development
-- Distributed Systems
-- DevOps Practices
-- Artificial Intelligence
-- Enterprise Application Development
-- Performance Optimization
-- Automation & Productivity Tools
+        improveContinuously();
+    }
 
----
+    public String philosophy() {
+        return "Engineering is not just writing code — "
+             + "it's designing systems people can depend on.";
+    }
 
-## Engineering Principles
+    @Override
+    public String toString() {
+        return """
+               Engineer Profile
+               ----------------
+               Role: Software Engineer
+               Mission: Build reliable software that solves real-world problems.
 
-- Build software that remains maintainable as systems grow.
-- Design solutions that balance simplicity, reliability, and scalability.
-- Prioritize readability and long-term maintainability over short-term shortcuts.
-- Focus on measurable business value and user outcomes.
-- Automate repetitive tasks wherever possible.
-- Continuously improve systems, processes, and engineering practices.
+               Focus Areas:
+               - Software Architecture
+               - Backend Engineering
+               - Cloud Technologies
+               - System Design
+               - Enterprise Applications
+
+               Core Principles:
+               - Maintainability
+               - Scalability
+               - Reliability
+               - Security
+               - Performance
+               """;
+    }
+}
+```
 
 ---
 
-> "Engineering is not just writing code — it's designing systems people can depend on."
+> *"Engineering is not just writing code — it's designing systems people can depend on."*
