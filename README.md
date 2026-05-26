@@ -1,134 +1,175 @@
-<h1 align="center">Hi 👋, I'm Rorisang Sekomane</h1>
+<h1 align="center">Rorisang Sekomane</h1>
 
 <h3 align="center">
-🚀 Full-Stack Software Engineer | Java • React • .NET • Cloud Enthusiast
+Software Engineer • Full-Stack Architect • Backend Systems Specialist
 </h3>
 
 <p align="center">
-Building scalable applications, solving real-world problems, and continuously learning new technologies.
+Designing scalable systems, building reliable software, and transforming complex business requirements into elegant technical solutions.
 </p>
 
 <p align="center">
   <a href="mailto:sekomanerorisang904@gmail.com">
-    <img src="https://img.shields.io/badge/Email-Contact-red?style=for-the-badge&logo=gmail&logoColor=white" />
+    <img src="https://img.shields.io/badge/Email-Contact-red?style=for-the-badge&logo=gmail&logoColor=white">
   </a>
   <a href="https://www.linkedin.com/in/rorisang-sekomane-413420268/">
-    <img src="https://img.shields.io/badge/LinkedIn-Connect-blue?style=for-the-badge&logo=linkedin&logoColor=white" />
-  </a>
-  <a href="https://github.com/Sekomane">
-    <img src="https://img.shields.io/github/followers/Sekomane?style=for-the-badge" />
+    <img src="https://img.shields.io/badge/LinkedIn-Professional-blue?style=for-the-badge&logo=linkedin&logoColor=white">
   </a>
 </p>
 
-<img align="right" alt="Coding" width="380" src="https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif"/>
+---
 
-## 👨‍💻 About Me
+# Engineering Philosophy
 
-- 🎓 Computer Science Graduate
-- 💼 Full-Stack Software Engineer
-- 🌱 Currently expanding my skills in Cloud Computing, DevOps, and Software Architecture
-- 🔭 Passionate about Backend Development and Scalable Systems
-- ⚡ Experienced with Java EE, React, C#, .NET, PHP, SQL, Docker, and REST APIs
-- 🚀 Always building, learning, and improving
+> Software should be scalable, maintainable, secure, and built with long-term business value in mind.
+
+I specialize in designing and developing enterprise-grade applications, backend systems, cloud-enabled solutions, and modern web platforms. My work focuses on creating reliable software architectures that balance performance, maintainability, security, and user experience.
 
 ---
 
-## 🛠️ Tech Stack
+# Core Expertise
 
-### Languages
+### Software Architecture
+- System Design
+- Object-Oriented Design (OOD)
+- Design Patterns
+- Clean Architecture
+- Domain-Driven Design Principles
+- SOLID Principles
+- Scalable Application Design
 
-<p>
-<img src="https://skillicons.dev/icons?i=java,cs,js,php,python,kotlin" />
-</p>
+### Backend Engineering
+- Java EE (JSP, Servlets, JPA, EJB)
+- C# / .NET
+- PHP
+- RESTful API Design
+- Authentication & Authorization
+- Database Architecture
+- Microservice Concepts
+- Integration Services
 
-### Frontend Development
+### Frontend Engineering
+- React
+- JavaScript (ES6+)
+- TypeScript
+- HTML5
+- CSS3
+- Bootstrap
+- Responsive Design Systems
 
-<p>
-<img src="https://skillicons.dev/icons?i=react,html,css,bootstrap" />
-</p>
+### Cloud & DevOps
+- Docker
+- AWS S3
+- Linux Administration
+- CI/CD Fundamentals
+- Application Monitoring
+- Performance Optimization
 
-### Backend Development
-
-<p>
-<img src="https://skillicons.dev/icons?i=java,dotnet,php,mysql" />
-</p>
-
-### Tools & Technologies
-
-<p>
-<img src="https://skillicons.dev/icons?i=git,github,docker,linux,vscode" />
-</p>
+### Data & Persistence
+- MySQL
+- SQL Optimization
+- Relational Database Design
+- Data Modeling
+- Query Performance Tuning
 
 ---
 
-## 🚀 What I Build
-
-✔ Enterprise Java Applications (JSP, Servlets, JPA, EJB)
-
-✔ Full-Stack Web Applications
-
-✔ REST API Integrations
-
-✔ Database-Driven Systems
-
-✔ Responsive Frontend Interfaces
-
-✔ Authentication & Authorization Systems
-
-✔ Business Automation Solutions
-
-✔ Android Applications with Kotlin
-
----
-
-## 📊 GitHub Stats
+# Technology Stack
 
 <p align="center">
-  <img height="170" src="https://github-readme-stats.vercel.app/api?username=Sekomane&show_icons=true&theme=tokyonight&hide_border=true" />
-</p>
-
-<p align="center">
-  <img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Sekomane&layout=compact&theme=tokyonight&hide_border=true" />
-</p>
-
-<p align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=Sekomane&theme=tokyonight&hide_border=true" />
+<img src="https://skillicons.dev/icons?i=java,cs,dotnet,react,ts,js,php,html,css,mysql,docker,aws,linux,git,github" />
 </p>
 
 ---
 
-## 🎯 Current Focus
+# Engineering Focus
 
-```text
-✓ Full-Stack Development
-✓ Java Enterprise Applications
-✓ Cloud Computing
-✓ Docker & Containerization
-✓ RESTful API Development
-✓ Software Architecture
-✓ Modern React Applications
+```java
+public class Engineer {
+
+    private final String mindset =
+        "Build once. Scale continuously.";
+
+    private final String[] priorities = {
+        "Architecture",
+        "Performance",
+        "Reliability",
+        "Security",
+        "Maintainability",
+        "User Experience"
+    };
+
+    public void deliverSolutions() {
+        analyze();
+        design();
+        develop();
+        test();
+        deploy();
+        optimize();
+    }
+}
 ```
 
 ---
 
-## 🌍 Connect With Me
+# Selected Areas of Interest
+
+- Enterprise Software Development
+- Distributed Systems
+- Cloud-Native Applications
+- High-Performance APIs
+- Platform Engineering
+- DevOps Practices
+- Artificial Intelligence Integration
+- Business Process Automation
+- Scalable Web Platforms
+
+---
+
+# GitHub Analytics
 
 <p align="center">
-  <a href="https://www.linkedin.com/in/rorisang-sekomane-413420268/">
-    <img src="https://skillicons.dev/icons?i=linkedin" />
-  </a>
+  <img height="170" src="https://github-readme-stats.vercel.app/api?username=Sekomane&show_icons=true&theme=github_dark&hide_border=true" />
+</p>
 
-  <a href="mailto:sekomanerorisang904@gmail.com">
-    <img src="https://skillicons.dev/icons?i=gmail" />
-  </a>
-
-  <a href="https://twitter.com/Rorisang06394">
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/twitter/twitter-original.svg" width="48" />
-  </a>
+<p align="center">
+  <img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Sekomane&layout=compact&theme=github_dark&hide_border=true" />
 </p>
 
 ---
 
-<h3 align="center">
-💡 “Great software is built by solving problems, not just writing code.”
-</h3>
+# Professional Principles
+
+✓ Write code that others can maintain
+
+✓ Design for scale before scale is needed
+
+✓ Prioritize reliability over complexity
+
+✓ Automate repetitive processes
+
+✓ Continuously improve systems and processes
+
+✓ Focus on measurable business impact
+
+---
+
+# Connect
+
+<p align="center">
+  <a href="mailto:sekomanerorisang904@gmail.com">
+    Email
+  </a>
+  •
+  <a href="https://www.linkedin.com/in/rorisang-sekomane-413420268/">
+    LinkedIn
+  </a>
+  •
+  <a href="https://github.com/Sekomane">
+    GitHub
+  </a>
+</p>
+
+<p align="center">
+<i>"Engineering is not just writing code. It's designing systems that people can depend on."</i>
+</p>
