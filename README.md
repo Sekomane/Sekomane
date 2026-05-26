@@ -42,6 +42,7 @@ Passionate about software architecture, clean code, cloud engineering, backend d
 
 <p align="left">
   <img src="https://skillicons.dev/icons?i=java,cs,python,php,js,ts,kotlin,react,angular,html,css,bootstrap,tailwind,dotnet,nodejs,express,django,mysql,postgres,firebase,docker,aws,linux,git,github,vscode,idea,androidstudio" />
+  <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/postman.svg" width="40" height="40"/>
 </p>
 
 ### Additional Technologies & Tools
