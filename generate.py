@@ -1,135 +1,649 @@
-"""Generates dark_mode.svg: a neofetch-style profile card with live GitHub stats."""
-import os, html, json, urllib.request
+"""
+Generates dark_mode.svg:
+A developer command-center style GitHub profile card
+with live GitHub statistics.
+"""
+
+import os
+import html
+import json
+import urllib.request
 from datetime import date
 
-# ---------- EDIT THESE ----------
+
+# ============================================================
+# CONFIGURATION
+# ============================================================
+
 USER = "Sekomane"
-CODING_SINCE = date(2021, 1, 1)   # <- change to when you started coding
-# --------------------------------
+CODING_SINCE = date(2022, 1, 1)
 
 TOKEN = os.environ.get("GITHUB_TOKEN")
-CW, LH, PAD = 9.0, 20, 30          # char width, line height, padding
-INFO_COLS = 70
 
-ART_RAW = [
-    ".-----------------------------.",
-    "| o o o                       |",
-    "| $ whoami                    |",
-    "| > rorisang_sekomane         |",
-    "| $ ./build --reliable        |",
-    "| compiling...      [#####] OK|",
-    "| $ run tests                 |",
-    "| 128 passed, 0 failed        |",
-    "| $ _                         |",
-    "'-----------------------------'",
-    "",
-    "      ____   ____",
-    "     |  _ \\ / ___|",
-    "     | |_) |\\___ \\",
-    "     |  _ <  ___) |",
-    "     |_| \\_\\|____/",
-    "",
-    "   < Full-Stack />  { Backend }",
-    "   [ Data ]  ( Cloud )  # Java",
-]
-ART_W = max(len(l) for l in ART_RAW)
-ART = [l.ljust(ART_W) for l in ART_RAW]
+# SVG layout
+PAD = 32
+LINE_HEIGHT = 22
+CHAR_WIDTH = 9
 
+LEFT_WIDTH = 48
+RIGHT_WIDTH = 62
+
+BG = "#0d1117"
+PANEL = "#161b22"
+BORDER = "#30363d"
+
+TEXT = "#c9d1d9"
+MUTED = "#8b949e"
+GREEN = "#3fb950"
+BLUE = "#58a6ff"
+PURPLE = "#bc8cff"
+ORANGE = "#ffa657"
+CYAN = "#79c0ff"
+
+
+# ============================================================
+# GITHUB API
+# ============================================================
 
 def api(path):
-    h = {"Accept": "application/vnd.github+json", "User-Agent": "readme-gen"}
+    headers = {
+        "Accept": "application/vnd.github+json",
+        "User-Agent": "rorisang-profile-generator"
+    }
+
     if TOKEN:
-        h["Authorization"] = f"Bearer {TOKEN}"
-    with urllib.request.urlopen(urllib.request.Request("https://api.github.com" + path, headers=h), timeout=20) as r:
-        return json.load(r)
+        headers["Authorization"] = f"Bearer {TOKEN}"
+
+    request = urllib.request.Request(
+        "https://api.github.com" + path,
+        headers=headers
+    )
+
+    with urllib.request.urlopen(request, timeout=20) as response:
+        return json.load(response)
 
 
-def stats():
+def get_stats():
+    """
+    Fetch live GitHub statistics.
+    """
+
     try:
-        u = api(f"/users/{USER}")
-        stars, page = 0, 1
+        user = api(f"/users/{USER}")
+
+        stars = 0
+        page = 1
+
         while True:
-            repos = api(f"/users/{USER}/repos?per_page=100&page={page}&type=owner")
+            repos = api(
+                f"/users/{USER}/repos"
+                f"?per_page=100&page={page}&type=owner"
+            )
+
             if not repos:
                 break
-            stars += sum(r["stargazers_count"] for r in repos)
+
+            stars += sum(
+                repo["stargazers_count"]
+                for repo in repos
+            )
+
             page += 1
-        commits = api(f"/search/commits?q=author:{USER}&per_page=1")["total_count"]
-        return {"Repos": u["public_repos"], "Stars": stars, "Followers": u["followers"], "Commits": f"{commits:,}"}
-    except Exception as e:
-        print("Could not fetch stats:", e)
-        return {"Repos": "--", "Stars": "--", "Followers": "--", "Commits": "--"}
+
+        try:
+            commits = api(
+                f"/search/commits"
+                f"?q=author:{USER}&per_page=1"
+            )["total_count"]
+        except Exception:
+            commits = "--"
+
+        return {
+            "Repos": user["public_repos"],
+            "Stars": stars,
+            "Followers": user["followers"],
+            "Commits": f"{commits:,}"
+                if isinstance(commits, int)
+                else commits
+        }
+
+    except Exception as error:
+
+        print("Could not fetch GitHub stats:", error)
+
+        return {
+            "Repos": "--",
+            "Stars": "--",
+            "Followers": "--",
+            "Commits": "--"
+        }
 
 
-def uptime():
-    t, s = date.today(), CODING_SINCE
-    y, m, d = t.year - s.year, t.month - s.month, t.day - s.day
-    if d < 0: m, d = m - 1, d + 30
-    if m < 0: y, m = y - 1, m + 12
-    return f"{y} years, {m} months, {d} days"
+# ============================================================
+# HELPERS
+# ============================================================
+
+def coding_time():
+    today = date.today()
+    start = CODING_SINCE
+
+    years = today.year - start.year
+    months = today.month - start.month
+
+    if today.day < start.day:
+        months -= 1
+
+    if months < 0:
+        years -= 1
+        months += 12
+
+    return f"{years}y {months}m"
 
 
-s = stats()
-ROWS = [
-    ("head", "rorisang@sekomane"),
-    ("row", "OS", "Windows, Linux"),
-    ("row", "Uptime", uptime()),
-    ("row", "Host", "Software Engineering"),
-    ("row", "Kernel", "Full-Stack & Backend Developer"),
-    ("row", "IDE", "IntelliJ IDEA, VS Code, Android Studio"),
-    ("blank",),
-    ("row", "Languages.Programming", "Java, C#, Python, PHP, JS, TS, Kotlin"),
-    ("row", "Languages.Frameworks", "React, Angular, .NET, Django, Flask"),
-    ("row", "Languages.Data", "SQL, PostgreSQL, MySQL"),
-    ("row", "Languages.Real", "English"),
-    ("blank",),
-    ("row", "Data.Analytics", "Pandas, NumPy, scikit-learn, Power BI"),
-    ("row", "Cloud.DevOps", "AWS, Docker, GitHub Actions, Firebase"),
-    ("blank",),
-    ("head", "Contact"),
-    ("row", "Email.Personal", "sekomanerorisang904@gmail.com"),
-    ("row", "LinkedIn", "rorisang-sekomane"),
-    ("row", "GitHub", USER),
-    ("blank",),
-    ("head", "GitHub Stats"),
-    ("row", "Repos", str(s["Repos"])),
-    ("row", "Stars", str(s["Stars"])),
-    ("row", "Followers", str(s["Followers"])),
-    ("row", "Commits", str(s["Commits"])),
+def escape(value):
+    return html.escape(str(value))
+
+
+def text_width(text):
+    return len(str(text)) * CHAR_WIDTH
+
+
+# ============================================================
+# DATA
+# ============================================================
+
+stats = get_stats()
+
+SYSTEM_INFO = [
+    ("OS", "Windows / Linux"),
+    ("ROLE", "Software Engineer"),
+    ("FOCUS", "Full-Stack + Backend"),
+    ("DATA", "Science + Analytics"),
+    ("CLOUD", "AWS + Docker"),
+    ("EDITOR", "VS Code / IntelliJ"),
+    ("UPTIME", coding_time()),
 ]
 
-E = html.escape
-x_info = PAD + ART_W * CW + PAD
-width = int(x_info + INFO_COLS * CW + PAD)
-n = max(len(ART), len(ROWS))
-height = (n + 2) * LH + PAD
+SOFTWARE = [
+    "Java",
+    "C#",
+    "Python",
+    "PHP",
+    "JavaScript",
+    "TypeScript",
+    "React",
+    "Angular",
+    ".NET",
+    "Django",
+    "Flask",
+    "Node.js",
+]
 
-out = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">',
-       '<style>text{font-family:"Consolas","DejaVu Sans Mono","Courier New",monospace;font-size:15px;white-space:pre}'
-       '.k{fill:#ffa657}.v{fill:#a5d6ff}.d{fill:#616e7c}.h{fill:#e6edf3}.a{fill:#c9d1d9}</style>',
-       f'<rect width="{width}" height="{height}" rx="14" fill="#161b22"/>']
+DATA = [
+    "Pandas",
+    "NumPy",
+    "Scikit-learn",
+    "Power BI",
+    "SQL",
+    "PostgreSQL",
+    "MySQL",
+]
 
-for i, line in enumerate(ART):
-    y = PAD + (i + 1) * LH
-    out.append(f'<text x="{PAD}" y="{y}" class="a" xml:space="preserve" textLength="{ART_W*CW}" lengthAdjust="spacingAndGlyphs">{E(line)}</text>')
+CLOUD = [
+    "AWS",
+    "Docker",
+    "Git",
+    "GitHub Actions",
+    "Firebase",
+    "Linux",
+    "REST APIs",
+]
 
-for i, r in enumerate(ROWS):
-    y = PAD + (i + 1) * LH
-    if r[0] == "blank":
-        continue
-    if r[0] == "head":
-        title = r[1]
-        fill = "—" * (INFO_COLS - len(title) - 5)
-        body = f'<tspan class="h">{E(title)}</tspan> <tspan class="d">{fill}-—-</tspan>'
-        out.append(f'<text x="{x_info}" y="{y}" xml:space="preserve" textLength="{INFO_COLS*CW}" lengthAdjust="spacingAndGlyphs">{body}</text>')
-    else:
-        key, val = r[1] + ":", r[2]
-        dots = max(2, INFO_COLS - len(key) - len(val) - 2)
-        body = f'<tspan class="d">. </tspan>'
-        body = (f'<tspan class="k">{E(key)}</tspan> <tspan class="d">{"." * dots}</tspan> '
-                f'<tspan class="v">{E(val)}</tspan>')
-        out.append(f'<text x="{x_info}" y="{y}" xml:space="preserve" textLength="{INFO_COLS*CW}" lengthAdjust="spacingAndGlyphs">{body}</text>')
+CONTACT = [
+    ("Email", "sekomanerorisang904@gmail.com"),
+    ("LinkedIn", "rorisang-sekomane"),
+    ("GitHub", USER),
+]
 
-out.append("</svg>")
-open("dark_mode.svg", "w", encoding="utf-8").write("\n".join(out))
+
+# ============================================================
+# SVG SETUP
+# ============================================================
+
+WIDTH = 1200
+
+LEFT_X = PAD
+RIGHT_X = 590
+
+HEIGHT = 700
+
+svg = []
+
+svg.append(
+    f'<svg xmlns="http://www.w3.org/2000/svg" '
+    f'width="{WIDTH}" height="{HEIGHT}" '
+    f'viewBox="0 0 {WIDTH} {HEIGHT}">'
+)
+
+svg.append(f"""
+<style>
+
+text {{
+    font-family:
+        "JetBrains Mono",
+        "Fira Code",
+        "Consolas",
+        "DejaVu Sans Mono",
+        monospace;
+}}
+
+.title {{
+    fill: {TEXT};
+    font-size: 24px;
+    font-weight: bold;
+}}
+
+.subtitle {{
+    fill: {MUTED};
+    font-size: 13px;
+}}
+
+.label {{
+    fill: {MUTED};
+    font-size: 13px;
+}}
+
+.value {{
+    fill: {TEXT};
+    font-size: 13px;
+}}
+
+.green {{
+    fill: {GREEN};
+}}
+
+.blue {{
+    fill: {BLUE};
+}}
+
+.purple {{
+    fill: {PURPLE};
+}}
+
+.orange {{
+    fill: {ORANGE};
+}}
+
+.cyan {{
+    fill: {CYAN};
+}}
+
+.muted {{
+    fill: {MUTED};
+}}
+
+.skill {{
+    fill: {TEXT};
+    font-size: 13px;
+}}
+
+.small {{
+    fill: {MUTED};
+    font-size: 11px;
+}}
+
+.stat-number {{
+    fill: {TEXT};
+    font-size: 24px;
+    font-weight: bold;
+}}
+
+.stat-label {{
+    fill: {MUTED};
+    font-size: 11px;
+}}
+
+</style>
+""")
+
+# Background
+svg.append(
+    f'<rect width="{WIDTH}" height="{HEIGHT}" '
+    f'rx="18" fill="{BG}" '
+    f'stroke="{BORDER}" stroke-width="1"/>'
+)
+
+
+# ============================================================
+# HEADER
+# ============================================================
+
+svg.append(
+    f'<text x="{PAD}" y="48" class="title">'
+    f'rorisang@sekomane'
+    f'</text>'
+)
+
+svg.append(
+    f'<text x="{PAD}" y="70" class="subtitle">'
+    f'~/developer/profile'
+    f'</text>'
+)
+
+# Status
+svg.append(
+    f'<circle cx="285" cy="65" r="5" fill="{GREEN}"/>'
+)
+
+svg.append(
+    f'<text x="298" y="70" class="green">'
+    f'ONLINE'
+    f'</text>'
+)
+
+# Header separator
+svg.append(
+    f'<line x1="{PAD}" y1="88" '
+    f'x2="{WIDTH - PAD}" y2="88" '
+    f'stroke="{BORDER}"/>'
+)
+
+
+# ============================================================
+# LEFT PANEL — TERMINAL
+# ============================================================
+
+svg.append(
+    f'<rect x="{LEFT_X}" y="110" '
+    f'width="520" height="545" rx="12" '
+    f'fill="{PANEL}" stroke="{BORDER}"/>'
+)
+
+# Terminal top bar
+svg.append(
+    f'<circle cx="{LEFT_X + 20}" cy="132" r="5" fill="#ff5f56"/>'
+)
+
+svg.append(
+    f'<circle cx="{LEFT_X + 38}" cy="132" r="5" fill="#ffbd2e"/>'
+)
+
+svg.append(
+    f'<circle cx="{LEFT_X + 56}" cy="132" r="5" fill="#27c93f"/>'
+)
+
+svg.append(
+    f'<text x="{LEFT_X + 80}" y="137" class="small">'
+    f'rorisang@sekomane:~'
+    f'</text>'
+)
+
+
+# Terminal content
+terminal_lines = [
+
+    ("green", "$ whoami"),
+    ("value", "rorisang_sekomane"),
+    ("muted", ""),
+
+    ("green", "$ cat role.txt"),
+    ("value", "Software Engineer"),
+    ("value", "Full-Stack • Backend • Data • Cloud"),
+    ("muted", ""),
+
+    ("green", "$ ./build --production"),
+    ("value", "Architecture .............. OK"),
+    ("value", "Backend ................... OK"),
+    ("value", "Data pipelines ............ OK"),
+    ("value", "Testing ................... OK"),
+    ("value", "Deployment ................ OK"),
+    ("muted", ""),
+
+    ("green", "$ system --status"),
+    ("cyan", "● APIs .................... operational"),
+    ("cyan", "● Databases ............... connected"),
+    ("cyan", "● Cloud ................... available"),
+    ("cyan", "● CI/CD ................... automated"),
+    ("muted", ""),
+
+    ("green", "$ focus"),
+    ("purple", "Software Engineering"),
+    ("purple", "Data Science & Analytics"),
+    ("purple", "Cloud & DevOps"),
+    ("muted", ""),
+
+    ("green", "$ echo $PHILOSOPHY"),
+    ("orange", "\"Build systems people can depend on.\""),
+    ("muted", ""),
+
+    ("green", "$ _"),
+]
+
+terminal_y = 170
+
+for color, line in terminal_lines:
+
+    svg.append(
+        f'<text x="{LEFT_X + 22}" '
+        f'y="{terminal_y}" '
+        f'class="{color}">'
+        f'{escape(line)}'
+        f'</text>'
+    )
+
+    terminal_y += 21
+
+
+# ============================================================
+# RIGHT PANEL — PROFILE
+# ============================================================
+
+# System information
+svg.append(
+    f'<text x="{RIGHT_X}" y="135" class="title">'
+    f'SYSTEM PROFILE'
+    f'</text>'
+)
+
+svg.append(
+    f'<line x1="{RIGHT_X}" y1="148" '
+    f'x2="1165" y2="148" '
+    f'stroke="{BORDER}"/>'
+)
+
+y = 175
+
+for label, value in SYSTEM_INFO:
+
+    svg.append(
+        f'<text x="{RIGHT_X}" y="{y}" class="label">'
+        f'{escape(label):<12}'
+        f'</text>'
+    )
+
+    svg.append(
+        f'<text x="{RIGHT_X + 115}" y="{y}" class="value">'
+        f'{escape(value)}'
+        f'</text>'
+    )
+
+    y += 24
+
+
+# ============================================================
+# GITHUB STATS
+# ============================================================
+
+y += 10
+
+svg.append(
+    f'<text x="{RIGHT_X}" y="{y}" class="title">'
+    f'GITHUB'
+    f'</text>'
+)
+
+y += 14
+
+svg.append(
+    f'<line x1="{RIGHT_X}" y1="{y}" '
+    f'x2="1165" y2="{y}" '
+    f'stroke="{BORDER}"/>'
+)
+
+y += 42
+
+github_stats = [
+    ("REPOS", stats["Repos"]),
+    ("STARS", stats["Stars"]),
+    ("FOLLOWERS", stats["Followers"]),
+    ("COMMITS", stats["Commits"]),
+]
+
+stat_x = RIGHT_X
+
+for label, value in github_stats:
+
+    svg.append(
+        f'<text x="{stat_x}" y="{y}" '
+        f'class="stat-number">'
+        f'{escape(value)}'
+        f'</text>'
+    )
+
+    svg.append(
+        f'<text x="{stat_x}" y="{y + 18}" '
+        f'class="stat-label">'
+        f'{label}'
+        f'</text>'
+    )
+
+    stat_x += 135
+
+
+# ============================================================
+# SKILLS
+# ============================================================
+
+y += 65
+
+svg.append(
+    f'<text x="{RIGHT_X}" y="{y}" class="title">'
+    f'TECH STACK'
+    f'</text>'
+)
+
+y += 14
+
+svg.append(
+    f'<line x1="{RIGHT_X}" y1="{y}" '
+    f'x2="1165" y2="{y}" '
+    f'stroke="{BORDER}"/>'
+)
+
+y += 32
+
+
+def draw_skill_section(title, skills, color, start_y):
+
+    svg.append(
+        f'<text x="{RIGHT_X}" y="{start_y}" '
+        f'class="{color}">'
+        f'{escape(title)}'
+        f'</text>'
+    )
+
+    current_x = RIGHT_X
+    current_y = start_y + 25
+
+    for skill in skills:
+
+        box_width = text_width(skill) + 22
+
+        # Wrap
+        if current_x + box_width > 1165:
+
+            current_x = RIGHT_X
+            current_y += 32
+
+        svg.append(
+            f'<rect x="{current_x}" y="{current_y - 17}" '
+            f'width="{box_width}" height="25" rx="7" '
+            f'fill="{BG}" stroke="{BORDER}"/>'
+        )
+
+        svg.append(
+            f'<text x="{current_x + 11}" '
+            f'y="{current_y}" '
+            f'class="skill">'
+            f'{escape(skill)}'
+            f'</text>'
+        )
+
+        current_x += box_width + 8
+
+    return current_y + 40
+
+
+y = draw_skill_section(
+    "SOFTWARE ENGINEERING",
+    SOFTWARE,
+    "blue",
+    y
+)
+
+y = draw_skill_section(
+    "DATA SCIENCE & ANALYTICS",
+    DATA,
+    "purple",
+    y
+)
+
+y = draw_skill_section(
+    "CLOUD / DEVOPS",
+    CLOUD,
+    "cyan",
+    y
+)
+
+
+# ============================================================
+# FOOTER / CONTACT
+# ============================================================
+
+footer_y = HEIGHT - 48
+
+svg.append(
+    f'<line x1="{PAD}" y1="{footer_y - 22}" '
+    f'x2="{WIDTH - PAD}" y2="{footer_y - 22}" '
+    f'stroke="{BORDER}"/>'
+)
+
+svg.append(
+    f'<text x="{PAD}" y="{footer_y}" class="small">'
+    f'github.com/{USER}'
+    f'</text>'
+)
+
+svg.append(
+    f'<text x="{WIDTH - 330}" y="{footer_y}" class="small">'
+    f'Engineering • Data • Cloud'
+    f'</text>'
+)
+
+
+# ============================================================
+# WRITE SVG
+# ============================================================
+
+svg.append("</svg>")
+
+with open(
+    "dark_mode.svg",
+    "w",
+    encoding="utf-8"
+) as file:
+
+    file.write("\n".join(svg))
+
+
 print("Wrote dark_mode.svg")
