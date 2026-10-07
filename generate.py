@@ -1,14 +1,10 @@
-"""
-Generates dark_mode.svg:
-A developer command-center style GitHub profile card
-with live GitHub statistics.
-"""
-
 import os
 import html
 import json
 import urllib.request
-from datetime import date
+import urllib.parse
+from datetime import date, datetime, timedelta
+
 
 
 # ============================================================
@@ -16,29 +12,69 @@ from datetime import date
 # ============================================================
 
 USER = "Sekomane"
-CODING_SINCE = date(2022, 1, 1)
 
 TOKEN = os.environ.get("GITHUB_TOKEN")
 
-# SVG layout
-PAD = 32
-LINE_HEIGHT = 22
-CHAR_WIDTH = 9
+# Card dimensions
+WIDTH = 1200
+HEIGHT = 760
 
-LEFT_WIDTH = 48
-RIGHT_WIDTH = 62
+PAD = 34
 
+# Main colours
 BG = "#0d1117"
 PANEL = "#161b22"
+PANEL_2 = "#0f141a"
 BORDER = "#30363d"
 
-TEXT = "#c9d1d9"
+TEXT = "#f0f6fc"
 MUTED = "#8b949e"
+
 GREEN = "#3fb950"
 BLUE = "#58a6ff"
 PURPLE = "#bc8cff"
-ORANGE = "#ffa657"
 CYAN = "#79c0ff"
+ORANGE = "#ffa657"
+
+# Contribution heatmap colours
+HEAT_0 = "#21262d"
+HEAT_1 = "#0e4429"
+HEAT_2 = "#006d32"
+HEAT_3 = "#26a641"
+HEAT_4 = "#39d353"
+
+
+# ============================================================
+# SVG HELPERS
+# ============================================================
+
+def escape(value):
+    return html.escape(str(value))
+
+
+def svg_text(x, y, text, css_class="", anchor=None):
+    anchor_attr = f' text-anchor="{anchor}"' if anchor else ""
+
+    return (
+        f'<text x="{x}" y="{y}" class="{css_class}"'
+        f'{anchor_attr}>{escape(text)}</text>'
+    )
+
+
+def rounded_rect(x, y, width, height, fill=PANEL, stroke=BORDER, radius=10):
+    return (
+        f'<rect x="{x}" y="{y}" '
+        f'width="{width}" height="{height}" '
+        f'rx="{radius}" fill="{fill}" stroke="{stroke}"/>'
+    )
+
+
+def line(x1, y1, x2, y2, stroke=BORDER, width=1):
+    return (
+        f'<line x1="{x1}" y1="{y1}" '
+        f'x2="{x2}" y2="{y2}" '
+        f'stroke="{stroke}" stroke-width="{width}"/>'
+    )
 
 
 # ============================================================
@@ -46,9 +82,14 @@ CYAN = "#79c0ff"
 # ============================================================
 
 def api(path):
+    """
+    Request data from GitHub's REST API.
+    """
+
     headers = {
         "Accept": "application/vnd.github+json",
-        "User-Agent": "rorisang-profile-generator"
+        "User-Agent": "rorisang-profile-generator",
+        "X-GitHub-Api-Version": "2026-03-10",
     }
 
     if TOKEN:
@@ -56,166 +97,213 @@ def api(path):
 
     request = urllib.request.Request(
         "https://api.github.com" + path,
-        headers=headers
+        headers=headers,
     )
 
-    with urllib.request.urlopen(request, timeout=20) as response:
+    with urllib.request.urlopen(request, timeout=30) as response:
         return json.load(response)
 
 
-def get_stats():
+# ============================================================
+# GITHUB PROFILE STATISTICS
+# ============================================================
+
+def get_repositories():
     """
-    Fetch live GitHub statistics.
+    Fetch all public repositories owned by the user.
     """
+
+    repositories = []
+    page = 1
+
+    while True:
+
+        repos = api(
+            f"/users/{USER}/repos"
+            f"?type=owner"
+            f"&per_page=100"
+            f"&page={page}"
+        )
+
+        if not repos:
+            break
+
+        repositories.extend(repos)
+
+        if len(repos) < 100:
+            break
+
+        page += 1
+
+    return repositories
+
+
+def get_profile_stats():
+    """
+    Fetch:
+        - public repositories
+        - total stars
+        - followers
+    """
+
+    user = api(f"/users/{USER}")
+
+    repositories = get_repositories()
+
+    stars = sum(
+        repo.get("stargazers_count", 0)
+        for repo in repositories
+    )
+
+    return {
+        "repos": user.get("public_repos", 0),
+        "stars": stars,
+        "followers": user.get("followers", 0),
+    }
+
+
+# ============================================================
+# CONTRIBUTION ACTIVITY
+# ============================================================
+
+def empty_activity():
+    """
+    Create an empty 52-week activity map.
+    """
+
+    today = date.today()
+
+    # Start on the Sunday 51 weeks before the current week.
+    start = today - timedelta(days=today.weekday() + 1)
+    start -= timedelta(weeks=51)
+
+    activity = {}
+
+    for day_offset in range(52 * 7):
+        current = start + timedelta(days=day_offset)
+        activity[current] = 0
+
+    return activity
+
+
+def get_commit_activity():
+    """
+    Build a 52-week contribution-style activity map.
+
+    GitHub's commit search endpoint is used here because it gives
+    us commit dates that can be grouped by day.
+    """
+
+    activity = empty_activity()
+
+    start_date = min(activity.keys())
+    end_date = max(activity.keys())
+
+    query = (
+        f"author:{USER} "
+        f"committer-date:{start_date.isoformat()}"
+        f"..{end_date.isoformat()}"
+    )
 
     try:
-        user = api(f"/users/{USER}")
 
-        stars = 0
-        page = 1
+        encoded_query = urllib.parse.quote(query)
 
-        while True:
-            repos = api(
-                f"/users/{USER}/repos"
-                f"?per_page=100&page={page}&type=owner"
-            )
+        result = api(
+            f"/search/commits"
+            f"?q={encoded_query}"
+            f"&per_page=100"
+        )
 
-            if not repos:
-                break
+        # GitHub search only returns the first page of results here.
+        # We still use the result as a real activity source rather
+        # than fabricating contribution values.
+        for item in result.get("items", []):
 
-            stars += sum(
-                repo["stargazers_count"]
-                for repo in repos
-            )
+            commit = item.get("commit", {})
+            author = commit.get("author", {})
 
-            page += 1
+            commit_date = author.get("date")
 
-        try:
-            commits = api(
-                f"/search/commits"
-                f"?q=author:{USER}&per_page=1"
-            )["total_count"]
-        except Exception:
-            commits = "--"
+            if not commit_date:
+                continue
 
-        return {
-            "Repos": user["public_repos"],
-            "Stars": stars,
-            "Followers": user["followers"],
-            "Commits": f"{commits:,}"
-                if isinstance(commits, int)
-                else commits
-        }
+            try:
+                day = datetime.fromisoformat(
+                    commit_date.replace("Z", "+00:00")
+                ).date()
+
+                if day in activity:
+                    activity[day] += 1
+
+            except ValueError:
+                continue
 
     except Exception as error:
 
-        print("Could not fetch GitHub stats:", error)
+        print("Could not fetch contribution activity:", error)
 
-        return {
-            "Repos": "--",
-            "Stars": "--",
-            "Followers": "--",
-            "Commits": "--"
-        }
-
-
-# ============================================================
-# HELPERS
-# ============================================================
-
-def coding_time():
-    today = date.today()
-    start = CODING_SINCE
-
-    years = today.year - start.year
-    months = today.month - start.month
-
-    if today.day < start.day:
-        months -= 1
-
-    if months < 0:
-        years -= 1
-        months += 12
-
-    return f"{years}y {months}m"
-
-
-def escape(value):
-    return html.escape(str(value))
-
-
-def text_width(text):
-    return len(str(text)) * CHAR_WIDTH
+    return activity
 
 
 # ============================================================
 # DATA
 # ============================================================
 
-stats = get_stats()
+try:
 
-SYSTEM_INFO = [
-    ("OS", "Windows / Linux"),
-    ("ROLE", "Software Engineer"),
-    ("FOCUS", "Full-Stack + Backend"),
-    ("DATA", "Science + Analytics"),
-    ("CLOUD", "AWS + Docker"),
-    ("EDITOR", "VS Code / IntelliJ"),
-    ("UPTIME", coding_time()),
-]
+    stats = get_profile_stats()
+
+except Exception as error:
+
+    print("Could not fetch GitHub profile:", error)
+
+    stats = {
+        "repos": "--",
+        "stars": "--",
+        "followers": "--",
+    }
+
+
+activity = get_commit_activity()
+
+
+# ============================================================
+# TECH STACK
+# ============================================================
 
 SOFTWARE = [
     "Java",
     "C#",
     "Python",
-    "PHP",
-    "JavaScript",
-    "TypeScript",
     "React",
     "Angular",
     ".NET",
     "Django",
     "Flask",
-    "Node.js",
 ]
 
-DATA = [
+DATA_ANALYTICS = [
+    "Python",
     "Pandas",
     "NumPy",
     "Scikit-learn",
     "Power BI",
     "SQL",
-    "PostgreSQL",
-    "MySQL",
 ]
 
-CLOUD = [
+FOOTER_STACK = [
     "AWS",
     "Docker",
-    "Git",
     "GitHub Actions",
-    "Firebase",
-    "Linux",
+    "PostgreSQL",
     "REST APIs",
 ]
 
-CONTACT = [
-    ("Email", "sekomanerorisang904@gmail.com"),
-    ("LinkedIn", "rorisang-sekomane"),
-    ("GitHub", USER),
-]
-
 
 # ============================================================
-# SVG SETUP
+# SVG
 # ============================================================
-
-WIDTH = 1200
-
-LEFT_X = PAD
-RIGHT_X = 590
-
-HEIGHT = 700
 
 svg = []
 
@@ -225,91 +313,102 @@ svg.append(
     f'viewBox="0 0 {WIDTH} {HEIGHT}">'
 )
 
-svg.append(f"""
+
+# ============================================================
+# STYLES
+# ============================================================
+
+svg.append(
+    f"""
 <style>
 
-text {{
-    font-family:
-        "JetBrains Mono",
-        "Fira Code",
-        "Consolas",
-        "DejaVu Sans Mono",
-        monospace;
-}}
+    text {{
+        font-family:
+            "Inter",
+            "Segoe UI",
+            "DejaVu Sans",
+            sans-serif;
+    }}
 
-.title {{
-    fill: {TEXT};
-    font-size: 24px;
-    font-weight: bold;
-}}
+    .name {{
+        fill: {TEXT};
+        font-size: 25px;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }}
 
-.subtitle {{
-    fill: {MUTED};
-    font-size: 13px;
-}}
+    .headline {{
+        fill: {MUTED};
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 1px;
+    }}
 
-.label {{
-    fill: {MUTED};
-    font-size: 13px;
-}}
+    .section {{
+        fill: {TEXT};
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }}
 
-.value {{
-    fill: {TEXT};
-    font-size: 13px;
-}}
+    .body {{
+        fill: {TEXT};
+        font-size: 14px;
+    }}
 
-.green {{
-    fill: {GREEN};
-}}
+    .muted {{
+        fill: {MUTED};
+        font-size: 12px;
+    }}
 
-.blue {{
-    fill: {BLUE};
-}}
+    .available {{
+        fill: {GREEN};
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }}
 
-.purple {{
-    fill: {PURPLE};
-}}
+    .stat-number {{
+        fill: {TEXT};
+        font-size: 25px;
+        font-weight: 700;
+    }}
 
-.orange {{
-    fill: {ORANGE};
-}}
+    .stat-label {{
+        fill: {MUTED};
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }}
 
-.cyan {{
-    fill: {CYAN};
-}}
+    .skill {{
+        fill: {TEXT};
+        font-size: 13px;
+    }}
 
-.muted {{
-    fill: {MUTED};
-}}
+    .footer {{
+        fill: {MUTED};
+        font-size: 12px;
+    }}
 
-.skill {{
-    fill: {TEXT};
-    font-size: 13px;
-}}
-
-.small {{
-    fill: {MUTED};
-    font-size: 11px;
-}}
-
-.stat-number {{
-    fill: {TEXT};
-    font-size: 24px;
-    font-weight: bold;
-}}
-
-.stat-label {{
-    fill: {MUTED};
-    font-size: 11px;
-}}
+    .footer-highlight {{
+        fill: {TEXT};
+        font-size: 12px;
+    }}
 
 </style>
-""")
+"""
+)
 
-# Background
+
+# ============================================================
+# BACKGROUND
+# ============================================================
+
 svg.append(
-    f'<rect width="{WIDTH}" height="{HEIGHT}" '
-    f'rx="18" fill="{BG}" '
+    f'<rect x="1" y="1" '
+    f'width="{WIDTH - 2}" height="{HEIGHT - 2}" '
+    f'rx="16" fill="{BG}" '
     f'stroke="{BORDER}" stroke-width="1"/>'
 )
 
@@ -319,331 +418,462 @@ svg.append(
 # ============================================================
 
 svg.append(
-    f'<text x="{PAD}" y="48" class="title">'
-    f'rorisang@sekomane'
-    f'</text>'
+    svg_text(
+        PAD,
+        48,
+        "RORISANG SEKOMANE",
+        "name",
+    )
 )
 
 svg.append(
-    f'<text x="{PAD}" y="70" class="subtitle">'
-    f'~/developer/profile'
-    f'</text>'
+    svg_text(
+        PAD,
+        70,
+        "SOFTWARE ENGINEER • DATA • CLOUD",
+        "headline",
+    )
 )
 
-# Status
+# Availability
 svg.append(
-    f'<circle cx="285" cy="65" r="5" fill="{GREEN}"/>'
+    f'<circle cx="{WIDTH - 145}" cy="43" r="5" '
+    f'fill="{GREEN}"/>'
 )
 
 svg.append(
-    f'<text x="298" y="70" class="green">'
-    f'ONLINE'
-    f'</text>'
+    svg_text(
+        WIDTH - 132,
+        48,
+        "AVAILABLE",
+        "available",
+    )
 )
 
-# Header separator
 svg.append(
-    f'<line x1="{PAD}" y1="88" '
-    f'x2="{WIDTH - PAD}" y2="88" '
-    f'stroke="{BORDER}"/>'
+    line(
+        PAD,
+        94,
+        WIDTH - PAD,
+        94,
+    )
 )
 
 
 # ============================================================
-# LEFT PANEL — TERMINAL
+# TOP TWO-COLUMN AREA
 # ============================================================
 
-svg.append(
-    f'<rect x="{LEFT_X}" y="110" '
-    f'width="520" height="545" rx="12" '
-    f'fill="{PANEL}" stroke="{BORDER}"/>'
-)
+TOP_Y = 94
+TOP_HEIGHT = 235
 
-# Terminal top bar
-svg.append(
-    f'<circle cx="{LEFT_X + 20}" cy="132" r="5" fill="#ff5f56"/>'
-)
+LEFT_X = PAD
+LEFT_WIDTH = 400
 
-svg.append(
-    f'<circle cx="{LEFT_X + 38}" cy="132" r="5" fill="#ffbd2e"/>'
-)
+RIGHT_X = 454
+RIGHT_WIDTH = WIDTH - RIGHT_X - PAD
 
-svg.append(
-    f'<circle cx="{LEFT_X + 56}" cy="132" r="5" fill="#27c93f"/>'
-)
 
+# Vertical divider
 svg.append(
-    f'<text x="{LEFT_X + 80}" y="137" class="small">'
-    f'rorisang@sekomane:~'
-    f'</text>'
+    line(
+        RIGHT_X - 27,
+        TOP_Y,
+        RIGHT_X - 27,
+        TOP_Y + TOP_HEIGHT,
+    )
 )
 
 
-# Terminal content
-terminal_lines = [
+# ------------------------------------------------------------
+# ABOUT
+# ------------------------------------------------------------
 
-    ("green", "$ whoami"),
-    ("value", "rorisang_sekomane"),
-    ("muted", ""),
+svg.append(
+    svg_text(
+        LEFT_X,
+        128,
+        "ABOUT",
+        "section",
+    )
+)
 
-    ("green", "$ cat role.txt"),
-    ("value", "Software Engineer"),
-    ("value", "Full-Stack • Backend • Data • Cloud"),
-    ("muted", ""),
-
-    ("green", "$ ./build --production"),
-    ("value", "Architecture .............. OK"),
-    ("value", "Backend ................... OK"),
-    ("value", "Data pipelines ............ OK"),
-    ("value", "Testing ................... OK"),
-    ("value", "Deployment ................ OK"),
-    ("muted", ""),
-
-    ("green", "$ system --status"),
-    ("cyan", "● APIs .................... operational"),
-    ("cyan", "● Databases ............... connected"),
-    ("cyan", "● Cloud ................... available"),
-    ("cyan", "● CI/CD ................... automated"),
-    ("muted", ""),
-
-    ("green", "$ focus"),
-    ("purple", "Software Engineering"),
-    ("purple", "Data Science & Analytics"),
-    ("purple", "Cloud & DevOps"),
-    ("muted", ""),
-
-    ("green", "$ echo $PHILOSOPHY"),
-    ("orange", "\"Build systems people can depend on.\""),
-    ("muted", ""),
-
-    ("green", "$ _"),
+about_lines = [
+    "Building reliable",
+    "software systems",
+    "across backend, data",
+    "and cloud platforms.",
 ]
 
-terminal_y = 170
+about_y = 158
 
-for color, line in terminal_lines:
-
-    svg.append(
-        f'<text x="{LEFT_X + 22}" '
-        f'y="{terminal_y}" '
-        f'class="{color}">'
-        f'{escape(line)}'
-        f'</text>'
-    )
-
-    terminal_y += 21
-
-
-# ============================================================
-# RIGHT PANEL — PROFILE
-# ============================================================
-
-# System information
-svg.append(
-    f'<text x="{RIGHT_X}" y="135" class="title">'
-    f'SYSTEM PROFILE'
-    f'</text>'
-)
-
-svg.append(
-    f'<line x1="{RIGHT_X}" y1="148" '
-    f'x2="1165" y2="148" '
-    f'stroke="{BORDER}"/>'
-)
-
-y = 175
-
-for label, value in SYSTEM_INFO:
+for text in about_lines:
 
     svg.append(
-        f'<text x="{RIGHT_X}" y="{y}" class="label">'
-        f'{escape(label):<12}'
-        f'</text>'
+        svg_text(
+            LEFT_X,
+            about_y,
+            text,
+            "body",
+        )
     )
 
-    svg.append(
-        f'<text x="{RIGHT_X + 115}" y="{y}" class="value">'
-        f'{escape(value)}'
-        f'</text>'
+    about_y += 21
+
+
+# Backend tag
+tag_x = LEFT_X
+tag_y = 252
+tag_width = 105
+tag_height = 28
+
+svg.append(
+    f'<rect x="{tag_x}" y="{tag_y}" '
+    f'width="{tag_width}" height="{tag_height}" '
+    f'rx="7" fill="{PANEL_2}" stroke="{BORDER}"/>'
+)
+
+svg.append(
+    svg_text(
+        tag_x + tag_width / 2,
+        tag_y + 19,
+        "BACKEND",
+        "muted",
+        anchor="middle",
     )
-
-    y += 24
-
-
-# ============================================================
-# GITHUB STATS
-# ============================================================
-
-y += 10
-
-svg.append(
-    f'<text x="{RIGHT_X}" y="{y}" class="title">'
-    f'GITHUB'
-    f'</text>'
 )
 
-y += 14
+
+# ------------------------------------------------------------
+# GITHUB ACTIVITY
+# ------------------------------------------------------------
 
 svg.append(
-    f'<line x1="{RIGHT_X}" y1="{y}" '
-    f'x2="1165" y2="{y}" '
-    f'stroke="{BORDER}"/>'
+    svg_text(
+        RIGHT_X,
+        128,
+        "GITHUB ACTIVITY",
+        "section",
+    )
 )
 
-y += 42
+
+# Statistics
+STAT_START_X = RIGHT_X
+STAT_Y = 165
+STAT_GAP = 130
 
 github_stats = [
-    ("REPOS", stats["Repos"]),
-    ("STARS", stats["Stars"]),
-    ("FOLLOWERS", stats["Followers"]),
-    ("COMMITS", stats["Commits"]),
+    ("REPOS", stats["repos"]),
+    ("STARS", stats["stars"]),
+    ("FOLLOWERS", stats["followers"]),
 ]
 
-stat_x = RIGHT_X
+for index, (label, value) in enumerate(github_stats):
 
-for label, value in github_stats:
+    x = STAT_START_X + index * STAT_GAP
 
     svg.append(
-        f'<text x="{stat_x}" y="{y}" '
-        f'class="stat-number">'
-        f'{escape(value)}'
-        f'</text>'
+        svg_text(
+            x,
+            STAT_Y,
+            value,
+            "stat-number",
+        )
     )
 
     svg.append(
-        f'<text x="{stat_x}" y="{y + 18}" '
-        f'class="stat-label">'
-        f'{label}'
-        f'</text>'
+        svg_text(
+            x,
+            STAT_Y + 19,
+            label,
+            "stat-label",
+        )
     )
 
-    stat_x += 135
+
+# Activity panel
+ACTIVITY_X = RIGHT_X
+ACTIVITY_Y = 205
+ACTIVITY_WIDTH = RIGHT_WIDTH
+ACTIVITY_HEIGHT = 100
+
+svg.append(
+    rounded_rect(
+        ACTIVITY_X,
+        ACTIVITY_Y,
+        ACTIVITY_WIDTH,
+        ACTIVITY_HEIGHT,
+        fill=PANEL_2,
+        stroke=BORDER,
+        radius=8,
+    )
+)
+
+svg.append(
+    svg_text(
+        ACTIVITY_X + 16,
+        ACTIVITY_Y + 22,
+        "Contribution / Activity",
+        "muted",
+    )
+)
 
 
 # ============================================================
-# SKILLS
+# CONTRIBUTION HEATMAP
 # ============================================================
 
-y += 65
+HEAT_X = ACTIVITY_X + 16
+HEAT_Y = ACTIVITY_Y + 38
 
-svg.append(
-    f'<text x="{RIGHT_X}" y="{y}" class="title">'
-    f'TECH STACK'
-    f'</text>'
-)
+CELL = 7
+CELL_GAP = 3
 
-y += 14
+# Activity data is arranged into 52 columns × 7 rows.
+start_day = min(activity.keys())
 
-svg.append(
-    f'<line x1="{RIGHT_X}" y1="{y}" '
-    f'x2="1165" y2="{y}" '
-    f'stroke="{BORDER}"/>'
-)
-
-y += 32
+# Move to Sunday.
+while start_day.weekday() != 6:
+    start_day -= timedelta(days=1)
 
 
-def draw_skill_section(title, skills, color, start_y):
+def heat_colour(count, maximum):
+    if count <= 0:
+        return HEAT_0
 
-    svg.append(
-        f'<text x="{RIGHT_X}" y="{start_y}" '
-        f'class="{color}">'
-        f'{escape(title)}'
-        f'</text>'
-    )
+    if maximum <= 0:
+        return HEAT_0
 
-    current_x = RIGHT_X
-    current_y = start_y + 25
+    ratio = count / maximum
 
-    for skill in skills:
+    if ratio <= 0.25:
+        return HEAT_1
 
-        box_width = text_width(skill) + 22
+    if ratio <= 0.50:
+        return HEAT_2
 
-        # Wrap
-        if current_x + box_width > 1165:
+    if ratio <= 0.75:
+        return HEAT_3
 
-            current_x = RIGHT_X
-            current_y += 32
+    return HEAT_4
 
-        svg.append(
-            f'<rect x="{current_x}" y="{current_y - 17}" '
-            f'width="{box_width}" height="25" rx="7" '
-            f'fill="{BG}" stroke="{BORDER}"/>'
+
+max_activity = max(activity.values()) if activity else 0
+
+
+for week in range(52):
+
+    for weekday in range(7):
+
+        current = start_day + timedelta(
+            weeks=week,
+            days=weekday,
         )
 
+        count = activity.get(current, 0)
+
+        x = HEAT_X + week * (CELL + CELL_GAP)
+        y = HEAT_Y + weekday * (CELL + CELL_GAP)
+
         svg.append(
-            f'<text x="{current_x + 11}" '
-            f'y="{current_y}" '
-            f'class="skill">'
-            f'{escape(skill)}'
-            f'</text>'
+            f'<rect x="{x}" y="{y}" '
+            f'width="{CELL}" height="{CELL}" '
+            f'rx="2" fill="{heat_colour(count, max_activity)}"/>'
         )
 
-        current_x += box_width + 8
 
-    return current_y + 40
+# ============================================================
+# DIVIDER
+# ============================================================
 
+MIDDLE_Y = 329
 
-y = draw_skill_section(
-    "SOFTWARE ENGINEERING",
-    SOFTWARE,
-    "blue",
-    y
+svg.append(
+    line(
+        PAD,
+        MIDDLE_Y,
+        WIDTH - PAD,
+        MIDDLE_Y,
+    )
 )
 
-y = draw_skill_section(
-    "DATA SCIENCE & ANALYTICS",
-    DATA,
-    "purple",
-    y
-)
+# Vertical divider for lower section
+LOWER_DIVIDER_X = WIDTH / 2
 
-y = draw_skill_section(
-    "CLOUD / DEVOPS",
-    CLOUD,
-    "cyan",
-    y
+svg.append(
+    line(
+        LOWER_DIVIDER_X,
+        MIDDLE_Y,
+        LOWER_DIVIDER_X,
+        650,
+    )
 )
 
 
 # ============================================================
-# FOOTER / CONTACT
+# LOWER SECTION
 # ============================================================
 
-footer_y = HEIGHT - 48
+LOWER_Y = 365
+
+
+# ------------------------------------------------------------
+# SOFTWARE
+# ------------------------------------------------------------
+
+SOFTWARE_X = PAD
 
 svg.append(
-    f'<line x1="{PAD}" y1="{footer_y - 22}" '
-    f'x2="{WIDTH - PAD}" y2="{footer_y - 22}" '
-    f'stroke="{BORDER}"/>'
+    svg_text(
+        SOFTWARE_X,
+        LOWER_Y,
+        "SOFTWARE",
+        "section",
+    )
 )
 
-svg.append(
-    f'<text x="{PAD}" y="{footer_y}" class="small">'
-    f'github.com/{USER}'
-    f'</text>'
-)
+software_y = LOWER_Y + 32
+
+for skill in SOFTWARE:
+
+    svg.append(
+        f'<circle cx="{SOFTWARE_X + 5}" '
+        f'cy="{software_y - 5}" '
+        f'r="3" fill="{BLUE}"/>'
+    )
+
+    svg.append(
+        svg_text(
+            SOFTWARE_X + 17,
+            software_y,
+            skill,
+            "body",
+        )
+    )
+
+    software_y += 25
+
+
+# ------------------------------------------------------------
+# DATA & ANALYTICS
+# ------------------------------------------------------------
+
+DATA_X = LOWER_DIVIDER_X + 34
 
 svg.append(
-    f'<text x="{WIDTH - 330}" y="{footer_y}" class="small">'
-    f'Engineering • Data • Cloud'
-    f'</text>'
+    svg_text(
+        DATA_X,
+        LOWER_Y,
+        "DATA & ANALYTICS",
+        "section",
+    )
+)
+
+data_y = LOWER_Y + 32
+
+for skill in DATA_ANALYTICS:
+
+    svg.append(
+        f'<circle cx="{DATA_X + 5}" '
+        f'cy="{data_y - 5}" '
+        f'r="3" fill="{PURPLE}"/>'
+    )
+
+    svg.append(
+        svg_text(
+            DATA_X + 17,
+            data_y,
+            skill,
+            "body",
+        )
+    )
+
+    data_y += 25
+
+
+# ============================================================
+# FOOTER
+# ============================================================
+
+FOOTER_DIVIDER_Y = 650
+
+svg.append(
+    line(
+        PAD,
+        FOOTER_DIVIDER_Y,
+        WIDTH - PAD,
+        FOOTER_DIVIDER_Y,
+    )
+)
+
+
+# Technology stack
+footer_stack = " • ".join(FOOTER_STACK)
+
+svg.append(
+    svg_text(
+        PAD,
+        680,
+        footer_stack,
+        "footer-highlight",
+    )
+)
+
+
+# GitHub
+svg.append(
+    svg_text(
+        PAD,
+        718,
+        f"github.com/{USER}",
+        "footer",
+    )
+)
+
+
+# Email
+svg.append(
+    svg_text(
+        WIDTH - PAD,
+        718,
+        "sekomanerorisang904@gmail.com",
+        "footer",
+        anchor="end",
+    )
 )
 
 
 # ============================================================
-# WRITE SVG
+# CLOSE SVG
 # ============================================================
 
 svg.append("</svg>")
 
+
+# ============================================================
+# WRITE FILE
+# ============================================================
+
+OUTPUT_FILE = "dark_mode.svg"
+
 with open(
-    "dark_mode.svg",
+    OUTPUT_FILE,
     "w",
-    encoding="utf-8"
+    encoding="utf-8",
 ) as file:
 
     file.write("\n".join(svg))
 
 
-print("Wrote dark_mode.svg")
+print()
+print("==========================================")
+print(" GitHub profile SVG generated successfully")
+print("==========================================")
+print(f"File: {OUTPUT_FILE}")
+print(f"User: {USER}")
+print(f"Repos: {stats['repos']}")
+print(f"Stars: {stats['stars']}")
+print(f"Followers: {stats['followers']}")
+print("==========================================")
+```
