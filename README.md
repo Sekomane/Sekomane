@@ -1,7 +1,5 @@
-<h1 align="center">Rorisang Sekomane</h1>
-
 <p align="center">
-Software Engineer • Full-Stack Development • Backend Systems • Data Science • Data Analytics • Cloud Technologies
+  <img src="dark_mode.svg" alt="Rorisang Sekomane – profile card" />
 </p>
 
 ---
@@ -22,11 +20,9 @@ Focused on building scalable, maintainable, and secure solutions while applying 
   <a href="mailto:sekomanerorisang904@gmail.com">
     <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/gmail.svg" height="28" width="28" />
   </a>
-
   <a href="https://www.linkedin.com/in/rorisang-sekomane-413420268/" target="_blank">
     <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/linkedin.svg" height="28" width="28" />
   </a>
-
   <a href="https://github.com/Sekomane" target="_blank">
     <img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/github.svg" height="28" width="28" />
   </a>
@@ -68,95 +64,3 @@ Focused on building scalable, maintainable, and secure solutions while applying 
 ### Additional Technologies & Tools
 
 Java EE (JSP, Servlets, JPA, EJB) • AWS S3 • GitHub Actions • CI/CD • REST APIs • Containerization • Authentication & Authorization • Machine Learning • Data Visualization • Statistical Analysis
-
----
-
-## Engineer.java
-
-```java
-import java.util.List;
-
-public class RorisangSekomane {
-
-    private final String role =
-        "Software Engineer";
-
-    private final String mission =
-        "Build reliable software and data-driven solutions that solve real-world problems.";
-
-    private final List<String> focusAreas = List.of(
-        "Software Architecture",
-        "Backend Engineering",
-        "Full-Stack Development",
-        "Cloud Technologies",
-        "System Design",
-        "Data Science",
-        "Data Analytics",
-        "Enterprise Applications"
-    );
-
-    private final List<String> engineeringPrinciples = List.of(
-        "Maintainability",
-        "Scalability",
-        "Reliability",
-        "Security",
-        "Performance",
-        "Data-Driven Decision Making"
-    );
-
-    public void buildSolution() {
-
-        analyseRequirements();
-
-        designArchitecture();
-
-        collectAndPrepareData();
-
-        developFeatures();
-
-        analyseData();
-
-        writeTests();
-
-        automateWorkflows();
-
-        deploySecurely();
-
-        monitorPerformance();
-
-        improveContinuously();
-    }
-
-    public String philosophy() {
-        return "Engineering is not just writing code — "
-             + "it's designing systems people can depend on.";
-    }
-
-    @Override
-    public String toString() {
-        return """
-               Engineer Profile
-               ----------------
-               Role: Software Engineer
-               Mission: Build reliable software and data-driven solutions.
-
-               Focus Areas:
-               - Software Architecture
-               - Backend Engineering
-               - Full-Stack Development
-               - Cloud Technologies
-               - System Design
-               - Data Science
-               - Data Analytics
-               - Enterprise Applications
-
-               Core Principles:
-               - Maintainability
-               - Scalability
-               - Reliability
-               - Security
-               - Performance
-               - Data-Driven Decision Making
-               """;
-    }
-}
