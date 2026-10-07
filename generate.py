@@ -1,132 +1,104 @@
-"""Generates card.svg: a dashboard-style profile card with live GitHub stats + contribution heatmap."""
-import os, json, html, urllib.request
-
-USER = "Sekomane"
-NAME = "RORISANG SEKOMANE"
-SUBTITLE = "SOFTWARE ENGINEER  •  DATA  •  CLOUD"
-EMAIL = "sekomanerorisang904@gmail.com"
-AVAILABLE = True
-WEEKS = 47
-
-SOFTWARE = ["Java", "C#", "Python", "TypeScript", "React", "Angular", ".NET", "Django"]
-DATA = ["Python", "Pandas", "NumPy", "Scikit-learn", "Power BI", "SQL"]
-CLOUD = ["AWS", "Docker", "GitHub Actions", "PostgreSQL", "MySQL", "REST APIs"]
-
-TOKEN = os.environ.get("GITHUB_TOKEN")
+"""Generates terminal.svg: a terminal-window profile card. Static, no API needed. Edit the data below, then run: python generate.py"""
+import html
 E = html.escape
 
+HOST = "rorisang@sekomane"
+CW, LH, FS = 9.0, 22, 15
+W = 900
+X0 = 40
 
-def call(path, body=None):
-    h = {"Accept": "application/vnd.github+json", "User-Agent": "readme-gen"}
-    if TOKEN:
-        h["Authorization"] = f"Bearer {TOKEN}"
-    data = json.dumps(body).encode() if body else None
-    req = urllib.request.Request("https://api.github.com" + path, data=data, headers=h)
-    with urllib.request.urlopen(req, timeout=25) as r:
-        return json.load(r)
+ART = [
+    " ____   ____",
+    "|  _ \\ / ___|",
+    "| |_) |\\___ \\",
+    "|  _ <  ___) |",
+    "|_| \\_\\|____/",
+    "",
+    "   < / >",
+    "",
+]
+INFO_COLS = 58
+INFO = [
+    ("head", HOST),
+    ("row", "Role", "Software Engineer"),
+    ("row", "Focus", "Full-Stack, Backend, Data, Cloud"),
+    ("row", "Mission", "Reliable software & data-driven solutions"),
+    ("row", "Principles", "Maintainable, Scalable, Secure"),
+    ("row", "Status", "Available"),
+]
+SKILLS = [
+    ("Software", "Java, C#, Python, PHP, JS, TS, Kotlin, React, Angular, .NET, Django, Flask"),
+    ("Data", "Python, Pandas, NumPy, Scikit-learn, Power BI, SQL"),
+    ("Cloud/Tools", "AWS, Docker, GitHub Actions, PostgreSQL, MySQL, REST APIs, Git"),
+]
+CONTACT = [
+    ("GitHub", "github.com/Sekomane"),
+    ("LinkedIn", "linkedin.com/in/rorisang-sekomane-413420268"),
+    ("Email", "sekomanerorisang904@gmail.com"),
+]
 
+lines = []  # (x, [(cls, text)...])
+def prompt(cmd, path="~"):
+    return [("u", HOST), ("w", ":"), ("p", path), ("w", "$ "), ("t", cmd)]
 
-def get_stats():
-    s = {"REPOS": "--", "STARS": "--", "FOLLOWERS": "--", "COMMITS": "--"}
-    try:
-        u = call(f"/users/{USER}")
-        s["REPOS"], s["FOLLOWERS"] = u["public_repos"], u["followers"]
-        stars, page = 0, 1
-        while True:
-            repos = call(f"/users/{USER}/repos?per_page=100&page={page}&type=owner")
-            if not repos: break
-            stars += sum(r["stargazers_count"] for r in repos); page += 1
-        s["STARS"] = stars
-        s["COMMITS"] = f'{call(f"/search/commits?q=author:{USER}&per_page=1")["total_count"]:,}'
-    except Exception as e:
-        print("stats failed:", e)
-    return s
+def blank(): lines.append((X0, []))
 
+lines.append((X0, prompt("neofetch")))
+art_w = max(len(l) for l in ART) + 6
+xi = X0 + art_w * CW
+rows = max(len(ART), len(INFO))
+for i in range(rows):
+    art = ART[i] if i < len(ART) else ""
+    lines.append((X0, [("a", art)]))
+    if i < len(INFO):
+        r = INFO[i]
+        if r[0] == "head":
+            lines[-1][1].clear()
+            lines[-1] = (X0, [("a", art.ljust(art_w)), ("h", r[1]), ("d", " " + "-" * (INFO_COLS - len(r[1]) - 1))])
+        else:
+            key, val = r[1] + ":", r[2]
+            dots = max(2, INFO_COLS - len(key) - len(val) - 2)
+            lines[-1] = (X0, [("a", art.ljust(art_w)), ("k", key), ("d", " " + "." * dots + " "), ("v", val)])
+blank()
+lines.append((X0, prompt("cat skills.txt")))
+kw = max(len(k) for k, _ in SKILLS) + 2
+for k, v in SKILLS:
+    lines.append((X0, [("k", (k + ":").ljust(kw + 1)), ("v", v)]))
+blank()
+lines.append((X0, prompt("cat contact.txt")))
+kw = max(len(k) for k, _ in CONTACT) + 2
+for k, v in CONTACT:
+    lines.append((X0, [("k", (k + ":").ljust(kw + 1)), ("v", v)]))
+blank()
+last = len(lines)
+lines.append((X0, prompt("") + [("cur", "\u2588")]))
 
-def get_heatmap():
-    q = 'query($l:String!){user(login:$l){contributionsCollection{contributionCalendar{totalContributions weeks{contributionDays{contributionLevel}}}}}}'
-    try:
-        cal = call("/graphql", {"query": q, "variables": {"l": USER}})["data"]["user"]["contributionsCollection"]["contributionCalendar"]
-        weeks = [[d["contributionLevel"] for d in w["contributionDays"]] for w in cal["weeks"]][-WEEKS:]
-        return weeks, f'{cal["totalContributions"]:,}'
-    except Exception as e:
-        print("heatmap failed:", e)
-        return [], "--"
-
-
-stats = get_stats()
-weeks, total = get_heatmap()
-
-W, H = 900, 660
-LV = {"NONE": "#21262d", "FIRST_QUARTER": "#0e4429", "SECOND_QUARTER": "#006d32", "THIRD_QUARTER": "#26a641", "FOURTH_QUARTER": "#39d353"}
-o = []
-a = o.append
-a(f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">')
-a('''<defs>
-<linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#3fb950"/><stop offset=".5" stop-color="#58a6ff"/><stop offset="1" stop-color="#bc8cff"/></linearGradient>
-<clipPath id="c"><rect width="900" height="660" rx="18"/></clipPath>
-</defs>
-<style>
-text{font-family:"Segoe UI","Helvetica Neue",Arial,sans-serif;fill:#e6edf3}
-.m{font-family:"Consolas","DejaVu Sans Mono","Courier New",monospace}
-.lbl{font-size:11px;letter-spacing:2.5px;fill:#7d8590;font-weight:600}
-.dim{fill:#7d8590}
-@keyframes p{0%,100%{opacity:1}50%{opacity:.25}}
-.pulse{animation:p 1.8s ease-in-out infinite}
-</style>''')
-a('<g clip-path="url(#c)">')
-a(f'<rect width="{W}" height="{H}" fill="#0d1117"/>')
-a(f'<rect width="{W}" height="4" fill="url(#g)"/>')
-# header
-a(f'<text x="40" y="52" font-size="28" font-weight="700" letter-spacing="1.5">{E(NAME)}</text>')
-a(f'<text x="40" y="78" class="m" font-size="12" letter-spacing="2" fill="#58a6ff" style="fill:#58a6ff">{E(SUBTITLE)}</text>')
-if AVAILABLE:
-    a('<rect x="716" y="34" width="144" height="32" rx="16" fill="#0e2a17" stroke="#238636"/>')
-    a('<circle cx="736" cy="50" r="5" fill="#3fb950" class="pulse"/>')
-    a('<text x="750" y="54" class="m" font-size="11" letter-spacing="2" style="fill:#3fb950">AVAILABLE</text>')
-# dividers
-for y in (100, 340, 602):
-    a(f'<line x1="0" x2="{W}" y1="{y}" y2="{y}" stroke="#21262d"/>')
-a('<line x1="300" x2="300" y1="100" y2="340" stroke="#21262d"/>')
-a('<line x1="300" x2="300" y1="340" y2="602" stroke="#21262d"/>')
-a('<line x1="600" x2="600" y1="340" y2="602" stroke="#21262d"/>')
-# about
-a('<text x="40" y="134" class="lbl">ABOUT</text>')
-a('<text x="40" y="176" font-size="21" font-weight="600">Building reliable</text>')
-a('<text x="40" y="203" font-size="21" font-weight="600">software systems</text>')
-for i, t in enumerate(["BACKEND", "FULL-STACK", "DATA", "CLOUD"]):
-    x, y = 40 + (i % 2) * 118, 232 + (i // 2) * 34
-    w = 106
-    a(f'<rect x="{x}" y="{y}" width="{w}" height="26" rx="13" fill="#161b22" stroke="#30363d"/>')
-    a(f'<text x="{x+w/2}" y="{y+17}" text-anchor="middle" class="m" font-size="10.5" letter-spacing="1.5">{t}</text>')
-# activity
-a('<text x="340" y="134" class="lbl">GITHUB ACTIVITY</text>')
-for i, (k, v) in enumerate(stats.items()):
-    x = 340 + i * 130
-    a(f'<text x="{x}" y="180" font-size="32" font-weight="700" style="fill:#e6edf3">{v}</text>')
-    a(f'<text x="{x}" y="200" class="lbl" style="font-size:10px">{k}</text>')
-a(f'<text x="860" y="134" text-anchor="end" class="m dim" font-size="11" style="fill:#7d8590">{total} contributions · last year</text>')
-gx, gy, pitch = 340, 224, 11
-for wi in range(WEEKS):
-    days = weeks[wi] if wi < len(weeks) else []
-    for di in range(7):
-        lv = days[di] if di < len(days) else "NONE"
-        a(f'<rect x="{gx+wi*pitch}" y="{gy+di*pitch}" width="9" height="9" rx="2" fill="{LV.get(lv, LV["NONE"])}"/>')
-# skill columns
-def col(x, title, items, color):
-    a(f'<text x="{x}" y="374" class="lbl">{title}</text>')
-    for i, t in enumerate(items):
-        y = 406 + i * 26
-        a(f'<circle cx="{x+4}" cy="{y-4}" r="4" fill="{color}"/>')
-        a(f'<text x="{x+20}" y="{y}" font-size="15">{E(t)}</text>')
-col(40, "SOFTWARE", SOFTWARE, "#3fb950")
-col(340, "DATA &amp; ANALYTICS", DATA, "#58a6ff")
-col(640, "CLOUD &amp; TOOLS", CLOUD, "#bc8cff")
-# footer
-a('<text x="40" y="636" class="m" font-size="12" style="fill:#7d8590">github.com/' + USER + '</text>')
-a(f'<text x="860" y="636" text-anchor="end" class="m" font-size="12" style="fill:#7d8590">{E(EMAIL)}</text>')
-a('</g>')
-a(f'<rect x=".5" y=".5" width="{W-1}" height="{H-1}" rx="18" fill="none" stroke="#30363d"/>')
-a('</svg>')
-open("card.svg", "w", encoding="utf-8").write("\n".join(o))
-print("Wrote card.svg")
+TOP = 64
+H = TOP + len(lines) * LH + 28
+o = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">',
+f'''<style>
+text{{font-family:"Consolas","DejaVu Sans Mono","Menlo","Courier New",monospace;font-size:{FS}px;white-space:pre;fill:#e6edf3}}
+.u{{fill:#3fb950;font-weight:700}}.p{{fill:#58a6ff;font-weight:700}}.w{{fill:#e6edf3}}.t{{fill:#e6edf3}}
+.k{{fill:#ffa657}}.v{{fill:#a5d6ff}}.d{{fill:#484f58}}.h{{fill:#e6edf3;font-weight:700}}.a{{fill:#3fb950}}
+.title{{font-size:13px;fill:#7d8590}}
+@keyframes f{{from{{opacity:0}}to{{opacity:1}}}}
+@keyframes b{{0%,49%{{opacity:1}}50%,100%{{opacity:0}}}}
+.l{{animation:f .25s backwards}}
+.cur{{fill:#3fb950;animation:b 1.1s step-end infinite}}
+</style>''',
+f'<rect width="{W}" height="{H}" rx="12" fill="#0d1117"/>',
+f'<path d="M0 12a12 12 0 0 1 12-12h{W-24}a12 12 0 0 1 12 12v32H0z" fill="#161b22"/>',
+f'<line x1="0" x2="{W}" y1="44" y2="44" stroke="#30363d"/>',
+'<circle cx="26" cy="22" r="6.5" fill="#ff5f56"/><circle cx="48" cy="22" r="6.5" fill="#ffbd2e"/><circle cx="70" cy="22" r="6.5" fill="#27c93f"/>',
+f'<text x="{W/2}" y="27" text-anchor="middle" class="title">{HOST}: ~</text>']
+for i, (x, spans) in enumerate(lines):
+    if not spans: continue
+    y = TOP + i * LH
+    body = "".join(f'<tspan class="{c}">{E(t)}</tspan>' for c, t in spans)
+    delay = f' style="animation-delay:{i*0.09:.2f}s"' if i != last else ""
+    cls = "l" if i != last else ""
+    o.append(f'<text x="{x}" y="{y}" xml:space="preserve" class="{cls}"{delay}>{body}</text>')
+o.append(f'<rect x=".5" y=".5" width="{W-1}" height="{H-1}" rx="12" fill="none" stroke="#30363d"/>')
+o.append('</svg>')
+open("terminal.svg", "w", encoding="utf-8").write("\n".join(o))
+print("Wrote terminal.svg")
