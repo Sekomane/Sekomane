@@ -15,7 +15,6 @@ ART = [
     "|_| \\_\\|____/",
     "",
     "   < / >",
-    "",
 ]
 INFO_COLS = 58
 INFO = [
@@ -24,7 +23,7 @@ INFO = [
     ("row", "Focus", "Full-Stack, Backend, Data, Cloud"),
     ("row", "Mission", "Reliable software & data-driven solutions"),
     ("row", "Principles", "Maintainable, Scalable, Secure"),
-    ("row", "Experience", "Full-stack Engineer Intern, Freelance Developer")
+    ("row", "Experience", "Full-Stack Engineer, Freelance Developer"),
     ("row", "Status", "Available"),
 ]
 SKILLS = [
