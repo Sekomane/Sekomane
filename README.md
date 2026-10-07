@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="terminal.svg" alt="Rorisang Sekomane – profile card" />
+  <img src="terminal.svg?v=2" alt="Rorisang Sekomane – profile card" />
 </p>
 
 ---
